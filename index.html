@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baysic - Привычки, обучение и экранное время</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-text">Baysic</span>
+            </div>
+            <nav class="main-nav">
+                <a href="#about" class="nav-link">О приложении</a>
+                <a href="#benefits" class="nav-link">Преимущества</a>
+                <a href="#tasks" class="nav-link">Задания</a>
+                <a href="#family" class="nav-link">Семья</a>
+                <a href="#rewards" class="nav-link">Награды</a>
+            </nav>
+            <div class="header-actions">
+                <button class="btn-header-secondary">Войти</button>
+                <button class="btn-header-primary">Скачать</button>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="hero-section">
+        <div class="background-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+        
+        <div class="hero-container">
+            <!-- Left side: Characters and iPhone -->
+            <div class="hero-left">
+                <div class="iphone-container">
+                    <div class="iphone-frame">
+                        <div class="iphone-side"></div>
+                        <div class="iphone-screen">
+                            <div class="iphone-status-bar">
+                                <span class="status-time">10:00</span>
+                                <div class="status-icons">
+                                    <span class="signal-icon">📶</span>
+                                    <span class="wifi-icon">📶</span>
+                                    <span class="battery-icon">🔋</span>
+                                </div>
+                            </div>
+                            
+                            <div class="app-screen active" data-screen="locked">
+                                <div class="locked-screen">
+                                    <div class="locked-header">Locked</div>
+                                    <div class="task-card">
+                                        <div class="task-header-area"></div>
+                                        <div class="task-content">
+                                            <div class="task-text-main">Съешь фрукт</div>
+                                            <div class="task-text-time">10 минут</div>
+                                        </div>
+                                        <button class="task-complete-btn">✓</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="app-screen" data-screen="home">
+                                <div class="home-screen">
+                                    <div class="home-header">Today</div>
+                                    <div class="progress-circle">
+                                        <svg class="progress-ring" width="120" height="120">
+                                            <circle class="progress-ring-circle" cx="60" cy="60" r="50" />
+                                        </svg>
+                                        <div class="progress-text">75%</div>
+                                    </div>
+                                    <div class="tasks-list">
+                                        <div class="task-item completed">✓ Eat a fruit</div>
+                                        <div class="task-item">Read a book</div>
+                                        <div class="task-item">Play outside</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="app-screen" data-screen="reward">
+                                <div class="reward-screen">
+                                    <div class="reward-header">Great job! 🎉</div>
+                                    <div class="reward-icon">⭐</div>
+                                    <div class="reward-text">You earned 10 points!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="characters-container">
+                    <img src="Mask group.png" alt="Characters" class="characters-image">
+                </div>
+            </div>
+            
+            <!-- Right side: Text and buttons -->
+            <div class="hero-right">
+                <h1 class="hero-title">
+                    Привычки, <span class="title-line-2">обучение и</span> <span class="title-line-3">экранное время</span> <span class="title-line-4">— в одном</span> <span class="title-line-5">семейном</span> <span class="title-line-6">приложении</span>
+                </h1>
+                
+                <p class="hero-description">
+                    Нативная блокировка экрана, развитие логического мышления, здоровье глаз, полезные привычки и напоминания об уроках — всё в одном приложении, которое объединяет семью.
+                </p>
+                
+                <div class="hero-buttons">
+                    <button class="btn-primary">Скачать приложение</button>
+                    <button class="btn-secondary">Посмотреть возможности</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Section 1: О приложении (основные фичи) -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">О приложении</h2>
+            <p class="section-description">Всё, что нужно для развития ребёнка и гармонии в семье — в одном приложении</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon icon-3d icon-3d-lock"></div>
+                    <h3>Блокировка экрана</h3>
+                    <p>Нативная и мягкая блокировка убирает истерики. Не нужно переживать сколько времени ребёнок провёл за экраном</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-3d icon-3d-books"></div>
+                    <h3>Образование и развитие</h3>
+                    <p>Развитие памяти и критического мышления через простые задания. Лёгкое внедрение образовательных модулей в перерывы игры</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-3d icon-3d-plant"></div>
+                    <h3>Полезные привычки</h3>
+                    <p>Формирование здоровых ежедневных привычек у детей до 12 лет</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-3d icon-3d-calendar"></div>
+                    <h3>Напоминалки о домашней работе</h3>
+                    <p>Ребёнок сфотографирует и отправит через приложение, что он сделал, чтобы разблокировать экран</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-3d icon-3d-quiz"></div>
+                    <h3>Развитие логического мышления</h3>
+                    <p>Квизы, головоломки и задания развивают нейронные связи, минимизируя зависимость от быстрого дофамина</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-3d icon-3d-timer"></div>
+                    <h3>Здоровье глаз и зарядка</h3>
+                    <p>Напоминания о зарядке для глаз и физических упражнениях для поддержания здоровья</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Преимущества для развития/здоровья -->
+    <section id="benefits" class="benefits-section">
+        <div class="container">
+            <h2 class="section-title">Развитие и здоровье — в игровой форме</h2>
+            <p class="section-description">Система выстроена так, что увеличивая нагрузку на нейронные связи, минимизирует зависимость от быстрого дофамина и снижает уровень истерик и срывов после завершения времени. Благодаря лёгкому внедрению образовательных модулей в перерывы игры укрепляются нейронные связи ребёнка</p>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🧠</div>
+                    <h3>Развитие логического мышления</h3>
+                    <p>Простое развитие памяти и критического мышления через простые задания. Благодаря лёгкому внедрению образовательных модулей в перерывы игры укрепляются нейронные связи ребёнка</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">👁️</div>
+                    <h3>Здоровье глаз</h3>
+                    <p>Напоминания о зарядке для глаз и перерывах помогают сохранить зрение при работе с экраном</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💪</div>
+                    <h3>Физическая зарядка</h3>
+                    <p>Регулярные задания на зарядку формируют привычку к физической активности</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📚</div>
+                    <h3>Полезные привычки</h3>
+                    <p>Ежедневные задания формируют здоровые привычки: чтение, вода, прогулки</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📝</div>
+                    <h3>Напоминалки об уроках</h3>
+                    <p>Ребёнок получает напоминания о домашней работе и может отправить фото выполненного задания</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📍</div>
+                    <h3>Геопозиция</h3>
+                    <p>Родители могут отслеживать местоположение ребёнка для безопасности</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Примеры заданий -->
+    <section id="tasks" class="tasks-section">
+        <div class="container">
+            <div class="tasks-scroll-container">
+                <div class="tasks-fixed-content">
+                    <h2 class="section-title">Примеры заданий</h2>
+                    <p class="section-description">Разнообразные задания для развития и формирования полезных привычек</p>
+                    <div class="tasks-info">
+                        <p>Ребёнок сфотографирует и отправит через приложение, что он сделал, чтобы разблокировать экран. Каждое задание помогает развиваться и формировать полезные привычки в игровой форме</p>
+                    </div>
+                </div>
+                <div class="tasks-scroll-wrapper">
+                    <div class="tasks-stack">
+                        <div class="task-example-card" data-index="0">
+                            <div class="task-example-icon">🍎</div>
+                            <h3>Съешь фрукт</h3>
+                            <p>Здоровое питание</p>
+                            <span class="task-time">10 минут</span>
+                        </div>
+                        <div class="task-example-card" data-index="1">
+                            <div class="task-example-icon">📝</div>
+                            <h3>Сделай домашнюю работу</h3>
+                            <p>Сфотографируй выполненное задание</p>
+                            <span class="task-time">30 минут</span>
+                        </div>
+                        <div class="task-example-card" data-index="2">
+                            <div class="task-example-icon">👁️</div>
+                            <h3>Зарядка для глаз</h3>
+                            <p>Здоровье зрения</p>
+                            <span class="task-time">5 минут</span>
+                        </div>
+                        <div class="task-example-card" data-index="3">
+                            <div class="task-example-icon">🧩</div>
+                            <h3>Реши головоломку</h3>
+                            <p>Развитие логического мышления</p>
+                            <span class="task-time">15 минут</span>
+                        </div>
+                        <div class="task-example-card" data-index="4">
+                            <div class="task-example-icon">📖</div>
+                            <h3>Прочитай и перескажи</h3>
+                            <p>Развитие памяти и речи</p>
+                            <span class="task-time">20 минут</span>
+                        </div>
+                        <div class="task-example-card" data-index="5">
+                            <div class="task-example-icon">💪</div>
+                            <h3>Сделай зарядку</h3>
+                            <p>Физическая активность</p>
+                            <span class="task-time">10 минут</span>
+                        </div>
+                        <div class="task-example-card" data-index="6">
+                            <div class="task-example-icon">🚶</div>
+                            <h3>Погуляй на улице</h3>
+                            <p>Физическая активность</p>
+                            <span class="task-time">20 минут</span>
+                        </div>
+                        <div class="task-example-card" data-index="7">
+                            <div class="task-example-icon">📍</div>
+                            <h3>Проверка геопозиции</h3>
+                            <p>Родители видят где находится ребёнок</p>
+                            <span class="task-time">Мгновенно</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Яркий блок про семейные отношения -->
+    <section id="family" class="family-highlight-section">
+        <div class="container">
+            <div class="family-highlight-content">
+                <div class="family-highlight-text">
+                    <h2 class="section-title">Объединяет семью</h2>
+                    <p class="section-description">Собирает всех родителей в одном сервисе, позволяя вместе прокачивать привычки, напоминать о ласковых словах друг другу или о том, что нужно обнять. Не только ребёнку нужна забота, она нужна и маме, и папе</p>
+                    <div class="family-features-list">
+                        <div class="family-feature-item">
+                            <div class="feature-check">✓</div>
+                            <div>
+                                <h3>Общий семейный рейтинг</h3>
+                                <p>Соревнуйтесь и мотивируйте друг друга в достижении целей</p>
+                            </div>
+                        </div>
+                        <div class="family-feature-item">
+                            <div class="feature-check">✓</div>
+                            <div>
+                                <h3>Привычки для родителей</h3>
+                                <p>Спорт, вода, чтение — родители тоже развиваются вместе с детьми</p>
+                            </div>
+                        </div>
+                        <div class="family-feature-item">
+                            <div class="feature-check">✓</div>
+                            <div>
+                                <h3>Напоминания о заботе</h3>
+                                <p>Напоминания о ласковых словах друг другу или о том, что нужно обнять</p>
+                            </div>
+                        </div>
+                        <div class="family-feature-item">
+                            <div class="feature-check">✓</div>
+                            <div>
+                                <h3>Взаимные задания</h3>
+                                <p>Мама → папе, папа → маме — создавайте задания друг для друга</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="family-highlight-visual">
+                    <img src="Mask group.png" alt="Family mascots" class="family-mascots-large">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Примеры взаимодействия между родителем и ребенками -->
+    <section id="interaction" class="interaction-section">
+
+        <div class="container">
+            <h2 class="section-title">Помощь родителям</h2>
+            <p class="section-description">Приложение решает повседневные задачи родителей и помогает в воспитании</p>
+            <div class="interaction-steps">
+                <div class="interaction-step">
+                    <div class="step-visual-large">
+                        <div class="step-icon">📝</div>
+                    </div>
+                    <h3>Не нужно напоминать про уроки</h3>
+                    <p>Ребёнок сфотографирует и отправит через приложение, что он сделал, чтобы разблокировать экран</p>
+                </div>
+                <div class="interaction-arrow">→</div>
+                <div class="interaction-step">
+                    <div class="step-visual-large">
+                        <div class="step-icon">💰</div>
+                    </div>
+                    <h3>Копилка за чтение</h3>
+                    <p>Можно давать копить деньги, например за чтение книги и её пересказ</p>
+                </div>
+                <div class="interaction-arrow">→</div>
+                <div class="interaction-step">
+                    <div class="step-visual-large">
+                        <div class="step-icon">⏱️</div>
+                    </div>
+                    <h3>Не нужно переживать о времени</h3>
+                    <p>Нативная и мягкая блокировка убирает истерики. Вы не переживаете сколько времени ребёнок провёл за экраном</p>
+                </div>
+                <div class="interaction-arrow">→</div>
+                <div class="interaction-step">
+                    <div class="step-visual-large">
+                        <div class="step-icon">🧠</div>
+                    </div>
+                    <h3>Развитие мышления</h3>
+                    <p>Простое развитие памяти и критического мышления через простые задания</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Награды/достижения/друзья/игровые механики -->
+    <section id="rewards" class="rewards-gamification-section">
+        <div class="container">
+            <h2 class="section-title">Игровые механики и награды</h2>
+            <p class="section-description">Мотивация через геймификацию: баллы, уровни, достижения и друзья</p>
+            <div class="gamification-content">
+                <div class="gamification-visual">
+                    <div class="rewards-visual">
+                        <div class="currency-display">
+                            <div class="currency-item">
+                                <span class="currency-icon">💎</span>
+                                <span class="currency-amount">250</span>
+                            </div>
+                            <div class="currency-item">
+                                <span class="currency-icon">⭐</span>
+                                <span class="currency-amount">1,520</span>
+                            </div>
+                        </div>
+                        <div class="wishlist-preview">
+                            <h4>Вишлист</h4>
+                            <div class="wish-item">
+                                <span>🎮</span>
+                                <span>Новая игра</span>
+                                <span class="wish-cost">500 ⭐</span>
+                            </div>
+                            <div class="wish-item">
+                                <span>🍕</span>
+                                <span>Пицца на выходных</span>
+                                <span class="wish-cost">300 ⭐</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gamification-features">
+                    <div class="gamification-grid">
+                        <div class="gamification-card">
+                            <div class="gamification-icon">💎</div>
+                            <h3>Внутренняя валюта</h3>
+                            <p>Кристаллы и баллы за выполненные задания</p>
+                        </div>
+                        <div class="gamification-card">
+                            <div class="gamification-icon">🏆</div>
+                            <h3>Достижения</h3>
+                            <p>Уровни, значки и награды за прогресс</p>
+                        </div>
+                        <div class="gamification-card">
+                            <div class="gamification-icon">👥</div>
+                            <h3>Друзья</h3>
+                            <p>Сравнивайте прогресс с друзьями и семьёй</p>
+                        </div>
+                        <div class="gamification-card">
+                            <div class="gamification-icon">💰</div>
+                            <h3>Копилка денег</h3>
+                            <p>Можно давать копить деньги за чтение книги и её пересказ или другие задания</p>
+                        </div>
+                        <div class="gamification-card">
+                            <div class="gamification-icon">📋</div>
+                            <h3>Вишлист</h3>
+                            <p>Ребёнок создаёт список желаний и копит на них баллами или деньгами</p>
+                        </div>
+                        <div class="gamification-card">
+                            <div class="gamification-icon">🎯</div>
+                            <h3>Цели</h3>
+                            <p>Родители устанавливают цели и награды для мотивации</p>
+                        </div>
+                        <div class="gamification-card">
+                            <div class="gamification-icon">😊</div>
+                            <h3>Маскоты</h3>
+                            <p>Персонажи реагируют на прогресс и мотивируют</p>
+                        </div>
+                    </div>
+                    <div class="characters-showcase">
+                        <img src="Mask group.png" alt="Characters" class="characters-showcase-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Скачать приложение -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Вместе создадим здоровое будущее для наших детей</h2>
+            <p class="cta-description">Начните развиваться вместе с детьми уже сегодня. Приложение помогает формировать полезные привычки, развивать мышление и объединять семью</p>
+            <div class="cta-buttons">
+                <button class="btn-primary large">Скачать приложение</button>
+                <button class="btn-secondary large">Узнать больше</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <span class="logo-text">Baysic</span>
+                    </div>
+                    <p class="footer-description">Привычки, обучение и экранное время — в одном семейном приложении</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">📘</a>
+                        <a href="#" class="social-link" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+                        <a href="#" class="social-link" aria-label="Telegram">✈️</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Продукт</h4>
+                    <ul class="footer-links">
+                        <li><a href="#about">О приложении</a></li>
+                        <li><a href="#benefits">Преимущества</a></li>
+                        <li><a href="#tasks">Задания</a></li>
+                        <li><a href="#rewards">Награды</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Для семьи</h4>
+                    <ul class="footer-links">
+                        <li><a href="#family">Семейное взаимодействие</a></li>
+                        <li><a href="#">Привычки для родителей</a></li>
+                        <li><a href="#">Взаимные задания</a></li>
+                        <li><a href="#">Безопасность</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Поддержка</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Помощь</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2024 Baysic. Все права защищены.</p>
+                <div class="footer-legal">
+                    <a href="#">Условия использования</a>
+                    <span>•</span>
+                    <a href="#">Политика конфиденциальности</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+

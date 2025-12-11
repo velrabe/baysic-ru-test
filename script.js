@@ -1,0 +1,354 @@
+// Screen animation controller
+class ScreenAnimator {
+    constructor() {
+        this.screens = document.querySelectorAll('.app-screen');
+        this.currentScreenIndex = 0;
+        this.screenOrder = ['locked', 'home', 'reward'];
+        this.animationDuration = 3000; // 3 seconds per screen
+        this.transitionDuration = 600; // 600ms transition
+        this.init();
+    }
+
+    init() {
+        // Set initial screen - only show locked screen
+        this.showScreen(0);
+        
+        // Disable automatic rotation for now to match the reference
+        // this.startRotation();
+    }
+
+    showScreen(index) {
+        // Remove active class from all screens
+        this.screens.forEach((screen, i) => {
+            screen.classList.remove('active', 'prev');
+            
+            if (i === index) {
+                screen.classList.add('active');
+            } else if (i < index) {
+                screen.classList.add('prev');
+            }
+        });
+        
+        this.currentScreenIndex = index;
+    }
+
+    nextScreen() {
+        const nextIndex = (this.currentScreenIndex + 1) % this.screens.length;
+        this.showScreen(nextIndex);
+    }
+
+    startRotation() {
+        setInterval(() => {
+            this.nextScreen();
+        }, this.animationDuration);
+    }
+}
+
+// Progress circle animation
+class ProgressAnimation {
+    constructor() {
+        this.progressCircle = document.querySelector('.progress-ring-circle');
+        if (this.progressCircle) {
+            this.animateProgress();
+        }
+    }
+
+    animateProgress() {
+        const radius = 50;
+        const circumference = 2 * Math.PI * radius;
+        const progress = 75; // 75%
+        const offset = circumference - (progress / 100) * circumference;
+        
+        this.progressCircle.style.strokeDasharray = circumference;
+        this.progressCircle.style.strokeDashoffset = offset;
+    }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new ScreenAnimator();
+    new ProgressAnimation();
+    
+    // Add smooth entrance animations
+    const heroLeft = document.querySelector('.hero-left');
+    const heroRight = document.querySelector('.hero-right');
+    
+    if (heroLeft && heroRight) {
+        heroLeft.style.opacity = '0';
+        heroLeft.style.transform = 'translateX(-30px)';
+        heroRight.style.opacity = '0';
+        heroRight.style.transform = 'translateX(30px)';
+        
+        setTimeout(() => {
+            heroLeft.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            heroRight.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            heroLeft.style.opacity = '1';
+            heroLeft.style.transform = 'translateX(0)';
+            heroRight.style.opacity = '1';
+            heroRight.style.transform = 'translateX(0)';
+        }, 100);
+    }
+});
+
+// Button click handlers
+document.addEventListener('DOMContentLoaded', () => {
+    const btnPrimary = document.querySelectorAll('.btn-primary');
+    const btnSecondary = document.querySelectorAll('.btn-secondary');
+    
+    // Download button handlers
+    btnPrimary.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Add your download logic here
+            console.log('Download app clicked');
+            // You can add actual download link or app store redirect
+        });
+    });
+    
+    // View features button handlers - scroll to features section
+    btnSecondary.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const featuresSection = document.querySelector('.features-section');
+            if (featuresSection) {
+                featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+    
+    // Smooth scroll for anchor links with header offset
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const target = document.querySelector(targetId);
+            if (target) {
+                const headerHeight = 80;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                const mobileMenu = document.querySelector('.mobile-menu');
+                if (mobileMenu && mobileMenu.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            }
+        });
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+    
+    // Mobile menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+    }
+});
+
+// Mobile menu functionality
+function toggleMobileMenu() {
+    const nav = document.querySelector('.main-nav');
+    const actions = document.querySelector('.header-actions');
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (!nav || !actions) return;
+    
+    nav.classList.toggle('mobile-active');
+    actions.classList.toggle('mobile-active');
+    toggle.classList.toggle('active');
+    
+    // Animate hamburger icon
+    const spans = toggle.querySelectorAll('span');
+    if (toggle.classList.contains('active')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+    } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    }
+}
+
+// Scroll animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Animate elements on scroll
+document.addEventListener('DOMContentLoaded', () => {
+    const animateElements = document.querySelectorAll('.feature-card, .step-item, .family-feature, .character-emotion, .reward-feature, .content-item, .parent-feature, .security-item, .benefit-card, .gamification-card');
+    
+    animateElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+    
+    // Tasks scroll effect with stacking
+    initTasksScrollEffect();
+});
+
+// Tasks scroll stacking effect
+function initTasksScrollEffect() {
+    const tasksSection = document.querySelector('.tasks-section');
+    const taskCards = document.querySelectorAll('.task-example-card');
+    
+    if (!tasksSection || taskCards.length === 0) return;
+    
+    let ticking = false;
+    
+    function updateCards() {
+        const sectionRect = tasksSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const sectionTop = sectionRect.top;
+        const sectionBottom = sectionRect.bottom;
+        const sectionHeight = sectionRect.height;
+        
+        // Calculate scroll progress within the section
+        // Progress goes from 0 (section top reaches viewport top) to 1 (section bottom reaches viewport bottom)
+        let scrollProgress = 0;
+        
+        if (sectionTop <= windowHeight && sectionBottom >= 0) {
+            // Section is visible in viewport
+            // Calculate progress based on how much of the section has been scrolled
+            const scrolled = windowHeight - sectionTop;
+            const maxScroll = sectionHeight;
+            scrollProgress = Math.max(0, Math.min(1, scrolled / maxScroll));
+        } else if (sectionTop > windowHeight) {
+            // Section is below viewport - hasn't started yet
+            scrollProgress = 0;
+        } else {
+            // Section is above viewport - fully scrolled
+            scrollProgress = 1;
+        }
+        
+        taskCards.forEach((card) => {
+            const cardIndex = parseInt(card.dataset.index);
+            const totalCards = taskCards.length;
+            
+            // Cards should stack from bottom to top
+            // Card 0 starts at top (offset 0)
+            // Card 1 starts below card 0 (positive offset pushes it down)
+            // Card 2 starts below card 1, etc.
+            const baseStackOffset = cardIndex * 50;
+            
+            // As we scroll, each card moves up to stack on top
+            // Card 0: stays at offset 0 (top position)
+            // Card 1: moves from 50px below to 0px (stacks on top of card 0)
+            // Card 2: moves from 100px below to 0px (stacks on top of card 1), etc.
+            const totalMoveDistance = baseStackOffset; // Distance to move to reach top
+            const currentOffset = baseStackOffset - (scrollProgress * totalMoveDistance);
+            
+            // Final offset: positive values push card down (below), 0 means card is on top
+            // Cards should accumulate below the top card, not above
+            const finalOffset = Math.max(0, currentOffset);
+            
+            // Scale: card on top should be original size (1.0), cards below should be smaller
+            let scale = 1.0;
+            if (finalOffset > 0) {
+                // Card is below - reduce scale based on offset
+                const maxOffsetForScale = 150;
+                const scaleReduction = Math.min(1, finalOffset / maxOffsetForScale);
+                // Scale from 1.0 (on top) to 0.8 (far below)
+                scale = 1.0 - (scaleReduction * 0.2);
+            }
+            
+            // Opacity: top card should be fully opaque, cards below should be readable
+            // Make cards more visible - reduce transparency significantly
+            let opacity = 1.0;
+            if (finalOffset > 0) {
+                // Card is below - make it less transparent but still very readable
+                // Cards just below should be almost fully opaque
+                // Cards further below should be slightly more transparent but still readable
+                const maxOffsetForOpacity = 150;
+                const opacityReduction = Math.min(1, finalOffset / maxOffsetForOpacity);
+                // Opacity from 1.0 (on top) to 0.85 (far below) - very readable
+                opacity = 1.0 - (opacityReduction * 0.15);
+            }
+            
+            // Z-index: later cards (higher index) should be on top
+            // Card 0: z-index 1, Card 1: z-index 2, Card 2: z-index 3, etc.
+            const zIndex = cardIndex + 1;
+            
+            // Apply all transformations
+            // Positive offset pushes card down (below), negative would push up (above)
+            card.style.transform = `translateY(${finalOffset}px) scale(${scale})`;
+            card.style.opacity = opacity;
+            card.style.zIndex = zIndex;
+        });
+        
+        ticking = false;
+    }
+    
+    function requestTick() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateCards);
+            ticking = true;
+        }
+    }
+    
+    // Initialize cards with starting positions
+    // Cards should start stacked from bottom, with first card on top
+    taskCards.forEach((card) => {
+        const cardIndex = parseInt(card.dataset.index);
+        const initialOffset = cardIndex * 50;
+        // Initial scale: card 0 is on top (1.0), others are smaller based on offset
+        let startScale = 1.0;
+        if (initialOffset > 0) {
+            const maxOffsetForScale = 150;
+            const scaleReduction = Math.min(1, initialOffset / maxOffsetForScale);
+            startScale = 1.0 - (scaleReduction * 0.2);
+        }
+        // Initial opacity: card 0 is fully visible, cards below are slightly transparent but very readable
+        let startOpacity = 1.0;
+        if (initialOffset > 0) {
+            const maxOffsetForOpacity = 150;
+            const opacityReduction = Math.min(1, initialOffset / maxOffsetForOpacity);
+            startOpacity = 1.0 - (opacityReduction * 0.15);
+        }
+        
+        card.style.transform = `translateY(${initialOffset}px) scale(${startScale})`;
+        card.style.opacity = startOpacity;
+        card.style.zIndex = cardIndex + 1; // Card 0 has z-index 1, Card 1 has z-index 2, etc.
+        card.style.top = '180px';
+    });
+    
+    window.addEventListener('scroll', requestTick, { passive: true });
+    window.addEventListener('resize', requestTick);
+    
+    // Initial call - call multiple times to ensure it works
+    updateCards();
+    setTimeout(updateCards, 50);
+    setTimeout(updateCards, 200);
+}
+
