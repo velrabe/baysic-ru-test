@@ -473,30 +473,18 @@ body {
     transform-style: preserve-3d;
 }
 
-.iphone-side {
-    position: absolute;
-    left: -10px;
-    top: 0;
-    width: 10px;
-    height: 100%;
-    background: linear-gradient(to right, #0a0a0a 0%, #1a1a1a 100%);
-    border-radius: 40px 0 0 40px;
-    transform: rotateY(90deg);
-    transform-origin: left center;
-    z-index: 0;
-}
-
 .iphone-frame::before {
     content: '';
     position: absolute;
-    top: 18px;
+    top: 6px;
     left: 50%;
     transform: translateX(-50%);
     width: 110px;
-    height: 22px;
+    height: 28px;
     background: #1a1a1a;
-    border-radius: 0 0 18px 18px;
-    z-index: 2;
+    border-radius: 0 0 20px 20px;
+    z-index: 3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .iphone-screen {
@@ -513,11 +501,16 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 22px;
+    padding: 0 22px;
+    padding-top: 28px;
+    padding-bottom: 10px;
     background: linear-gradient(135deg, #C5A3D6 0%, #B39DDB 100%);
     color: white;
     font-size: 15px;
     font-weight: 600;
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
 }
 
 .status-icons {
@@ -770,14 +763,6 @@ body {
     line-height: 1.15;
     color: #9575CD;
     margin-bottom: 8px;
-}
-
-.hero-title .title-line-2,
-.hero-title .title-line-3,
-.hero-title .title-line-4,
-.hero-title .title-line-5,
-.hero-title .title-line-6 {
-    font-size: 48px;
 }
 
 .hero-description {
@@ -2600,7 +2585,7 @@ body {
         0 4px 16px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
     position: sticky;
-    margin-bottom: -380px;
+    margin-bottom: 0;
     border: 2px solid rgba(197, 163, 214, 0.1);
     backdrop-filter: blur(10px);
     will-change: transform, opacity;
@@ -2614,7 +2599,9 @@ body {
 }
 
 .task-example-card:not(:first-child) {
-    margin-top: 450px;
+    /* Нормальный поток, без "ломающего" отрицательного overlap.
+       Колоду (смещение предыдущих вниз) делаем в JS через translateY. */
+    margin-top: 140px;
 }
 
 /* Card positions are controlled by JavaScript */
@@ -2754,6 +2741,25 @@ body {
     height: auto;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2));
     animation: float 4s ease-in-out infinite;
+}
+
+.family-mascots-large.placeholder {
+    width: 427px;
+    height: 455px;
+    background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(149, 117, 205, 0.3);
+    margin: 0 auto;
+}
+
+.family-mascots-large.placeholder span {
+    color: #9575CD;
+    font-size: 24px;
+    font-weight: 600;
+    opacity: 0.6;
 }
 
 /* Section 5: Примеры взаимодействия */

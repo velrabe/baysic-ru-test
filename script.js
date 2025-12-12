@@ -230,81 +230,60 @@ function initTasksScrollEffect() {
     function updateCards() {
         const sectionRect = tasksSection.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        const sectionTop = sectionRect.top;
-        const sectionBottom = sectionRect.bottom;
-        const sectionHeight = sectionRect.height;
-        
-        // Calculate scroll progress within the section
-        // Progress goes from 0 (section top reaches viewport top) to 1 (section bottom reaches viewport bottom)
-        let scrollProgress = 0;
-        
-        if (sectionTop <= windowHeight && sectionBottom >= 0) {
-            // Section is visible in viewport
-            // Calculate progress based on how much of the section has been scrolled
-            const scrolled = windowHeight - sectionTop;
-            const maxScroll = sectionHeight;
-            scrollProgress = Math.max(0, Math.min(1, scrolled / maxScroll));
-        } else if (sectionTop > windowHeight) {
-            // Section is below viewport - hasn't started yet
-            scrollProgress = 0;
-        } else {
-            // Section is above viewport - fully scrolled
-            scrollProgress = 1;
+        const isVisible = sectionRect.bottom > 0 && sectionRect.top < windowHeight;
+
+        // Match CSS: .task-example-card { top: 180px; }
+        const stickyTop = 180;
+        const peekOffset = 18; // "чуть вниз" для эффекта колоды (и зона плавного сдвига)
+
+        // If section isn't visible, reset transforms to avoid odd states
+        if (!isVisible) {
+            taskCards.forEach((card) => {
+                card.style.transform = '';
+                card.style.opacity = '';
+                card.style.zIndex = '';
+            });
+            ticking = false;
+            return;
         }
-        
+
+        // Active card = последняя карточка, которая уже "упёрлась" в sticky потолок
+        let activeIndex = -1;
         taskCards.forEach((card) => {
-            const cardIndex = parseInt(card.dataset.index);
-            const totalCards = taskCards.length;
-            
-            // Cards should stack from bottom to top
-            // Card 0 starts at top (offset 0)
-            // Card 1 starts below card 0 (positive offset pushes it down)
-            // Card 2 starts below card 1, etc.
-            const baseStackOffset = cardIndex * 50;
-            
-            // As we scroll, each card moves up to stack on top
-            // Card 0: stays at offset 0 (top position)
-            // Card 1: moves from 50px below to 0px (stacks on top of card 0)
-            // Card 2: moves from 100px below to 0px (stacks on top of card 1), etc.
-            const totalMoveDistance = baseStackOffset; // Distance to move to reach top
-            const currentOffset = baseStackOffset - (scrollProgress * totalMoveDistance);
-            
-            // Final offset: positive values push card down (below), 0 means card is on top
-            // Cards should accumulate below the top card, not above
-            const finalOffset = Math.max(0, currentOffset);
-            
-            // Scale: card on top should be original size (1.0), cards below should be smaller
-            let scale = 1.0;
-            if (finalOffset > 0) {
-                // Card is below - reduce scale based on offset
-                const maxOffsetForScale = 150;
-                const scaleReduction = Math.min(1, finalOffset / maxOffsetForScale);
-                // Scale from 1.0 (on top) to 0.8 (far below)
-                scale = 1.0 - (scaleReduction * 0.2);
-            }
-            
-            // Opacity: top card should be fully opaque, cards below should be readable
-            // Make cards more visible - reduce transparency significantly
-            let opacity = 1.0;
-            if (finalOffset > 0) {
-                // Card is below - make it less transparent but still very readable
-                // Cards just below should be almost fully opaque
-                // Cards further below should be slightly more transparent but still readable
-                const maxOffsetForOpacity = 150;
-                const opacityReduction = Math.min(1, finalOffset / maxOffsetForOpacity);
-                // Opacity from 1.0 (on top) to 0.85 (far below) - very readable
-                opacity = 1.0 - (opacityReduction * 0.15);
-            }
-            
-            // Z-index: later cards (higher index) should be on top
-            // Card 0: z-index 1, Card 1: z-index 2, Card 2: z-index 3, etc.
-            const zIndex = cardIndex + 1;
-            
-            // Apply all transformations
-            // Positive offset pushes card down (below), negative would push up (above)
-            card.style.transform = `translateY(${finalOffset}px) scale(${scale})`;
-            card.style.opacity = opacity;
-            card.style.zIndex = zIndex;
+            const idx = Number(card.dataset.index ?? 0);
+            const rect = card.getBoundingClientRect();
+            if (rect.top <= stickyTop + 1) activeIndex = Math.max(activeIndex, idx);
+        });
+
+        // Плавный "перекрёстный" сдвиг в последние peekOffset px до прилипания следующей карточки:
+        // когда следующая карточка (activeIndex+1) подходит к потолку, предыдущие плавно уезжают вниз на 18px.
+        let preShift = 0;
+        const nextIndex = activeIndex + 1;
+        const nextCard = [...taskCards].find((c) => Number(c.dataset.index ?? 0) === nextIndex);
+        if (nextCard) {
+            const nextTop = nextCard.getBoundingClientRect().top;
+            // nextTop: stickyTop + peekOffset  ->  stickyTop
+            // progress: 0 -> 1
+            const t = (stickyTop + peekOffset - nextTop) / peekOffset;
+            preShift = Math.max(0, Math.min(1, t)) * peekOffset;
+        }
+
+        taskCards.forEach((card) => {
+            const idx = Number(card.dataset.index ?? 0);
+            const isStuck = activeIndex >= 0 && idx <= activeIndex;
+
+            // Все предыдущие карточки сдвигаем вниз, чтобы проглядывали снизу (колода)
+            // + preShift даёт плавный сдвиг в момент, когда следующая карточка "доприлипает"
+            const baseOffset = isStuck && idx < activeIndex ? (activeIndex - idx) * peekOffset : 0;
+            const offset = isStuck && idx < activeIndex ? baseOffset + preShift : 0;
+
+            // Стабильный z-index: чем дальше карточка — тем выше всегда.
+            // Так она не "выпрыгивает" при смене состояния/transform.
+            const zIndex = 1000 + idx;
+
+            card.style.transform = offset ? `translateY(${offset}px)` : '';
+            card.style.opacity = ''; // без fading
+            card.style.zIndex = String(zIndex);
         });
         
         ticking = false;
@@ -318,36 +297,13 @@ function initTasksScrollEffect() {
     }
     
     // Initialize cards with starting positions
-    // Cards should start stacked from bottom, with first card on top
-    taskCards.forEach((card) => {
-        const cardIndex = parseInt(card.dataset.index);
-        const initialOffset = cardIndex * 50;
-        // Initial scale: card 0 is on top (1.0), others are smaller based on offset
-        let startScale = 1.0;
-        if (initialOffset > 0) {
-            const maxOffsetForScale = 150;
-            const scaleReduction = Math.min(1, initialOffset / maxOffsetForScale);
-            startScale = 1.0 - (scaleReduction * 0.2);
-        }
-        // Initial opacity: card 0 is fully visible, cards below are slightly transparent but very readable
-        let startOpacity = 1.0;
-        if (initialOffset > 0) {
-            const maxOffsetForOpacity = 150;
-            const opacityReduction = Math.min(1, initialOffset / maxOffsetForOpacity);
-            startOpacity = 1.0 - (opacityReduction * 0.15);
-        }
-        
-        card.style.transform = `translateY(${initialOffset}px) scale(${startScale})`;
-        card.style.opacity = startOpacity;
-        card.style.zIndex = cardIndex + 1; // Card 0 has z-index 1, Card 1 has z-index 2, etc.
-        card.style.top = '180px';
-    });
+    // Start with a consistent state
+    updateCards();
     
     window.addEventListener('scroll', requestTick, { passive: true });
     window.addEventListener('resize', requestTick);
     
     // Initial call - call multiple times to ensure it works
-    updateCards();
     setTimeout(updateCards, 50);
     setTimeout(updateCards, 200);
 }
