@@ -490,6 +490,313 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.why-works {
+    padding: 64px 0;
+}
+
+.why-works-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.why-works-title {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 32px;
+    color: #111827;
+}
+
+.why-works-content {
+    margin-bottom: 40px;
+}
+
+.why-works-list {
+    list-style: none;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.why-works-list li {
+    font-size: 1rem;
+    color: #4B5563;
+    padding-left: 24px;
+    position: relative;
+}
+
+.why-works-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #9279E8;
+    font-weight: bold;
+}
+
+.why-works-cards {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.why-works-card {
+    flex: 0 0 auto;
+    min-width: 200px;
+    padding: 24px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.why-works-card-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.why-works-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.visual-insert {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F7F7FF;
+}
+
+.visual-insert-content {
+    max-width: 1200px;
+    padding: 0 24px;
+    text-align: center;
+}
+
+.visual-insert-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #111827;
+}
+
+.visual-insert-description {
+    font-size: 1.125rem;
+    color: #6B7280;
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.visual-insert-subtitle {
+    font-size: 1rem;
+    color: #9279E8;
+    font-weight: 500;
+}
+
+.tasks-examples {
+    padding: 64px 0;
+}
+
+.tasks-examples-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.tasks-examples-title {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #111827;
+}
+
+.tasks-examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.task-example-card {
+    padding: 24px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.task-example-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.help-parents {
+    padding: 64px 0;
+    background: #F7F7FF;
+}
+
+.help-parents-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.help-parents-title {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 32px;
+    color: #111827;
+}
+
+.help-parents-list {
+    list-style: none;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.help-parents-list li {
+    font-size: 1.125rem;
+    color: #4B5563;
+    padding-left: 24px;
+    position: relative;
+}
+
+.help-parents-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #9279E8;
+    font-weight: bold;
+}
+
+.family-unite {
+    padding: 64px 0;
+}
+
+.family-unite-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.family-unite-title {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 32px;
+    color: #111827;
+}
+
+.family-unite-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.family-unite-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.family-unite-list li {
+    font-size: 1.125rem;
+    color: #4B5563;
+    padding-left: 24px;
+    position: relative;
+}
+
+.family-unite-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #9279E8;
+    font-weight: bold;
+}
+
+.game-progress {
+    padding: 64px 0;
+    background: #F7F7FF;
+}
+
+.game-progress-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.game-progress-title {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 32px;
+    color: #111827;
+}
+
+.game-progress-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.game-progress-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.game-progress-list li {
+    font-size: 1.125rem;
+    color: #4B5563;
+    padding-left: 24px;
+    position: relative;
+}
+
+.game-progress-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #9279E8;
+    font-weight: bold;
+}
+
+.final-cta {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #F4F4FC 0%, #ffffff 100%);
+}
+
+.final-cta-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    text-align: center;
+}
+
+.final-cta-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: #111827;
+    line-height: 1.3;
+}
+
+.final-cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 @media (max-width: 768px) {
     .about {
         padding: 48px 0 72px;
@@ -513,6 +820,48 @@ body {
         min-width: 65%;
         max-width: 70%;
         scroll-snap-align: start;
+    }
+
+    .why-works,
+    .tasks-examples,
+    .help-parents,
+    .family-unite,
+    .game-progress,
+    .final-cta {
+        padding: 48px 0;
+    }
+
+    .why-works-inner,
+    .tasks-examples-inner,
+    .help-parents-inner,
+    .family-unite-inner,
+    .game-progress-inner,
+    .final-cta-inner {
+        padding: 0 16px;
+    }
+
+    .why-works-title,
+    .tasks-examples-title,
+    .help-parents-title,
+    .family-unite-title,
+    .game-progress-title,
+    .final-cta-title {
+        font-size: 1.75rem;
+    }
+
+    .tasks-examples-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .final-cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .final-cta-buttons .app-link {
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 }
 
