@@ -1170,6 +1170,20 @@ body {
     right: 30%;
 }
 
+.download-banner-iphone {
+    position: absolute;
+    bottom: 0;
+    left: 70%;
+    transform: translateX(-50%);
+    height: auto;
+    max-height: 100%;
+    width: auto;
+    z-index: 1;
+    opacity: 1;
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+}
+
 .download-banner-content {
     position: relative;
     z-index: 1;

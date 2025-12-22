@@ -363,4 +363,37 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   setupAboutDecorReveal();
+
+  // Parallax effect for iPhone in download banner
+  const setupDownloadBannerIphoneParallax = () => {
+    const downloadBanner = document.querySelector('.download-banner');
+    const iphone = document.querySelector('.download-banner-iphone');
+    
+    if (!downloadBanner || !iphone) return;
+
+    const handleScroll = () => {
+      const bannerRect = downloadBanner.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      
+      // Проверяем, видна ли секция баннера
+      if (bannerRect.bottom < 0 || bannerRect.top > viewportHeight) {
+        return;
+      }
+
+      // Вычисляем позицию относительно центра viewport
+      const bannerCenter = bannerRect.top + bannerRect.height / 2;
+      const viewportCenter = viewportHeight / 2;
+      const offset = (viewportCenter - bannerCenter) * 0.1; // Небольшая акселерация
+      
+      // Ограничиваем движение до ±20px
+      const parallaxOffset = Math.max(-20, Math.min(20, offset));
+      
+      iphone.style.transform = `translateX(-50%) translateY(${-parallaxOffset}px)`;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  };
+
+  setupDownloadBannerIphoneParallax();
 });
