@@ -395,5 +395,48 @@ document.addEventListener('DOMContentLoaded', () => {
     handleScroll();
   };
 
+  const setupControlIntroStickerReveal = () => {
+    const sections = document.querySelectorAll('.control-intro');
+    if (!sections.length) return;
+
+    const setupForSection = (section) => {
+      const sticker = section.querySelector('.control-intro-sticker');
+      const tooltip = section.querySelector('.control-intro-tooltip');
+      if (!sticker && !tooltip) return;
+
+      const reveal = () => {
+        if (sticker) {
+          sticker.classList.add('control-intro-sticker--visible');
+        }
+        if (tooltip) {
+          tooltip.classList.add('control-intro-tooltip--visible');
+        }
+      };
+
+      if (!('IntersectionObserver' in window)) {
+        reveal();
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // Появляем, когда хотя бы ~40% блока в вьюпорте
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+              reveal();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+
+      observer.observe(section);
+    };
+
+    sections.forEach(setupForSection);
+  };
+
   setupDownloadBannerIphoneParallax();
+  setupControlIntroStickerReveal();
 });

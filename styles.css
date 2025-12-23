@@ -319,14 +319,37 @@ body {
 
 .hero-subtitle {
     font-size: 1.25rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0.75rem;
     color: #666;
     line-height: 1.5;
     max-width: 600px;
 }
 
+.hero-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #4B5563;
+    max-width: 640px;
+    margin-bottom: 1.5rem;
+}
+
+.hero-meta-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-badge {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(146, 121, 232, 0.12);
+    color: #4B5563;
+    font-size: 0.85rem;
+}
+
 .hero-cta {
-    margin-bottom: 2rem;
+    margin-bottom: 0;
 }
 
 .cta-button {
@@ -410,6 +433,189 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.control-intro {
+    padding: 48px 0 96px;
+    background-color: #ffffff;
+}
+
+.control-intro-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.control-intro-media {
+    flex: 0 0 45%;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 480px;
+}
+
+.control-intro-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.control-intro--lock .control-intro-image--lock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+}
+
+.control-intro--lock .control-intro-sticker {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 80%;
+    width: auto;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.control-intro--lock .control-intro-sticker.control-intro-sticker--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.control-intro-tooltip {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    height: 15%;
+    opacity: 0;
+    transform: translateY(16px);
+    filter: drop-shadow(0 8px 20px rgba(15, 23, 42, 0.18));
+    transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
+}
+
+.control-intro-tooltip.control-intro-tooltip--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.control-intro--image-right .control-intro-inner {
+    flex-direction: row-reverse;
+}
+
+.control-intro--edu .control-intro-media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 480px;
+}
+
+.control-intro--edu .control-intro-image--edu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+}
+
+.control-intro--edu .control-intro-sticker--edu {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 80%;
+    width: auto;
+}
+
+.control-intro--edu .control-intro-tooltip--edu {
+    bottom: 10%;
+    right: 10%;
+    height: 15%;
+}
+
+.control-intro--hab .control-intro-media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 480px;
+}
+
+.control-intro--hab .control-intro-image--hab {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+}
+
+.control-intro--hab .control-intro-sticker--hab {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 70%;
+    width: auto;
+}
+
+.control-intro--hab .control-intro-tooltip--hab {
+    bottom: 10%;
+    right: 10%;
+    height: 15%;
+}
+
+.control-intro--sport .control-intro-media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 480px;
+}
+
+.control-intro--sport .control-intro-image--sport {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+}
+
+.control-intro--sport .control-intro-sticker--sport {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 70%;
+    width: auto;
+}
+
+.control-intro--sport .control-intro-tooltip--sport {
+    bottom: 10%;
+    right: 10%;
+    height: 15%;
+}
+
+.control-intro-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.control-intro-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.control-intro-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #4B5563;
+    max-width: 480px;
+}
+
+.control-intro + .control-intro {
+    padding-top: 0;
 }
 
 .about-problem-title {
@@ -569,6 +775,90 @@ body {
 .about-dec-card--visible {
     opacity: 1;
     transform: translate(-50%, -50%);
+}
+
+.setup-steps {
+    padding: 64px 0;
+    background: linear-gradient(180deg, #E0F1FF 0%, #F0F7FF 45%, #E2F6D3 100%);
+}
+
+.setup-steps-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 56px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 40px;
+    align-items: center;
+}
+
+.setup-steps-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 16px;
+}
+
+.setup-steps-subtitle {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #1F2933;
+    max-width: 520px;
+    margin-bottom: 24px;
+}
+
+.setup-steps-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.setup-steps-button img {
+    height: 48px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 8px 20px rgba(15, 23, 42, 0.18));
+}
+
+.setup-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.setup-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+}
+
+.setup-step-badge {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #9279E8, #76B5FD);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.setup-step-content {
+    flex: 1;
+}
+
+.setup-step-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 4px;
 }
 
 .why-works {
@@ -1038,6 +1328,22 @@ body {
 
     .about-problem-title {
         font-size: 1.625rem;
+    }
+
+    .control-intro {
+        padding: 40px 0 56px;
+    }
+
+    .control-intro-inner {
+        flex-direction: column;
+        padding: 0 16px;
+        gap: 24px;
+    }
+
+    .control-intro-media,
+    .control-intro-content {
+        width: 100%;
+        max-width: 100%;
     }
 
     .about-problem-list li {
