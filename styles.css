@@ -352,6 +352,33 @@ body {
     margin-bottom: 0;
 }
 
+.control-feature-list {
+    margin-top: 12px;
+}
+
+.control-feature-action {
+    margin-top: 16px;
+}
+
+.control-feature-button {
+    padding: 0.625rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #9279E8;
+    border: 1.5px solid #9279E8;
+    border-radius: 999px;
+    cursor: pointer;
+    background: transparent;
+    box-shadow: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.control-feature-button:hover {
+    transform: translateY(-2px);
+    background-color: rgba(146, 121, 232, 0.08);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+
 .cta-button {
     padding: 1rem 2rem;
     font-size: 1rem;
@@ -889,7 +916,8 @@ body {
     margin-bottom: 0;
 }
 
-.why-works-list {
+.why-works-list,
+.control-feature-list {
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -897,7 +925,8 @@ body {
     margin-top: 8px;
 }
 
-.why-works-list li {
+.why-works-list li,
+.control-feature-list li {
     font-size: 1rem;
     color: #4B5563;
     padding-left: 28px;
@@ -905,7 +934,8 @@ body {
     line-height: 1.5;
 }
 
-.why-works-list li::before {
+.why-works-list li::before,
+.control-feature-list li::before {
     content: "✓";
     position: absolute;
     left: 0;
