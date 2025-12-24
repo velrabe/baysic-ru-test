@@ -99,14 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const isOpen = headerNav.classList.toggle('is-open');
       headerMenuToggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
     });
-
+    
     headerNav.querySelectorAll('.header-nav-link').forEach((link) => {
       link.addEventListener('click', () => {
         if (headerNav.classList.contains('is-open')) {
           headerNav.classList.remove('is-open');
           headerMenuToggle.setAttribute('aria-label', 'Открыть меню');
-        }
-      });
+            }
+        });
     });
   };
 
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const clouds = Array.from(container.querySelectorAll('.hero-cloud'));
     if (!clouds.length) return;
-
+            
     const states = clouds.map((el, index) => ({
       el,
       x: 0,
@@ -154,12 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
           state.x = -cloudWidth - Math.random() * (containerWidth * 0.3);
         } else {
           state.x = containerWidth + Math.random() * (containerWidth * 0.3);
-        }
-      }
+                }
+            }
 
       el.style.transform = `translate3d(${state.x}px, 0, 0)`;
     };
-
+    
     // начальная расстановка — равномерно по ширине
     requestAnimationFrame(() => {
       states.forEach((s) => initCloud(s, true));
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cloudWidth = el.offsetWidth || 0;
 
         state.x += state.direction * state.speed * dt;
-
+        
         if (state.direction > 0 && state.x > containerWidth + cloudWidth) {
           initCloud(state, false);
         } else if (state.direction < 0 && state.x < -cloudWidth) {
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
       baseCards.forEach((card) => {
         const clone = card.cloneNode(true);
         track.appendChild(clone);
-      });
+});
     }
 
     let items = Array.from(track.children).map((el) => ({
@@ -344,8 +344,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!('IntersectionObserver' in window)) {
       showCards();
-      return;
-    }
+            return;
+        }
 
     const observer = new IntersectionObserver(
       (entries) => {
