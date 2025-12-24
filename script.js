@@ -22,32 +22,26 @@ document.addEventListener('DOMContentLoaded', () => {
     parallaxElements.forEach((element) => {
       const rect = element.getBoundingClientRect();
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const currentScrollY = window.scrollY;
       
-      // Сохраняем позицию, когда элемент только полностью вошел в viewport
-      if (element._entryScrollY === undefined) {
-        // Проверяем, полностью ли элемент в viewport
-        if (rect.top <= 0 && rect.bottom >= viewportHeight) {
-          element._entryScrollY = currentScrollY;
+      // Параллакс применяется когда элемент виден в viewport
+      const isVisible = rect.bottom > 0 && rect.top < viewportHeight;
+      
+      if (isVisible) {
+        // Параллакс начинается только когда элемент полностью вошел в viewport
+        // (верх элемента выше или на уровне верха viewport)
+        if (rect.top <= 0) {
+          // Вычисляем смещение относительно центра viewport
+          const centerOffset = rect.top + rect.height / 2 - viewportHeight / 2;
+          // Применяем параллакс: элемент движется в 2 раза медленнее (коэффициент 0.5)
+          const parallaxOffset = -centerOffset * 0.5;
+          element.style.transform = `translateY(${parallaxOffset}px)`;
+        } else {
+          // До полного входа в viewport - без параллакса
+          element.style.transform = '';
         }
-      }
-      
-      // Параллакс применяется только когда элемент полностью в viewport
-      const isFullyInViewport = rect.top <= 0 && rect.bottom >= viewportHeight;
-      
-      if (isFullyInViewport && element._entryScrollY !== undefined) {
-        // Вычисляем, насколько проскроллена страница от момента входа элемента в viewport
-        const scrollDelta = currentScrollY - element._entryScrollY;
-        // Применяем параллакс: элемент движется в 2 раза медленнее (коэффициент 0.5)
-        const parallaxOffset = scrollDelta * 0.5;
-        element.style.transform = `translateY(${parallaxOffset}px)`;
       } else {
-        // До полного входа в viewport или после выхода - без параллакса
+        // Элемент не виден - сбрасываем transform
         element.style.transform = '';
-        // Сбрасываем точку входа, если элемент вышел из viewport
-        if (!isFullyInViewport) {
-          element._entryScrollY = undefined;
-        }
       }
     });
   };
@@ -464,4 +458,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setupDownloadBannerIphoneParallax();
   setupControlIntroStickerReveal();
+
+  // Эффект разворачивания для about-problem-article
+  const setupAboutProblemUnfold = () => {
+    const article = document.querySelector('.about-problem-article');
+    const cta = document.querySelector('.about-problem-cta-inner');
+    const articleBody = document.querySelector('.about-problem-article-body');
+    
+    if (!article || !cta || !articleBody) return;
+
+    // Вычисляем высоты
+    const ctaHeight = cta.offsetHeight;
+    
+    // Получаем реальные паддинги статьи
+    const computedStyle = window.getComputedStyle(article);
+    const paddingTop = parseFloat(computedStyle.paddingTop) || 0;
+    const paddingBottom = parseFloat(computedStyle.paddingBottom) || 0;
+    const articlePadding = paddingTop + paddingBottom;
+    
+    // Начальная высота без паддингов
+    const minHeight = ctaHeight;
+    
+    // Получаем полную высоту контента
+    const articleHeader = article.querySelector('.about-problem-article-header');
+    const headerHeight = articleHeader ? articleHeader.offsetHeight : 0;
+    const bodyHeight = articleBody.offsetHeight;
+    // Максимальная высота включает паддинги сверху и снизу
+    const fullContentHeight = headerHeight + bodyHeight + ctaHeight + articlePadding;
+    
+    // Устанавливаем начальную высоту
+    article.style.minHeight = `${minHeight}px`;
+    article.style.height = `${minHeight}px`;
+    
+    const handleScroll = () => {
+      const rect = article.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const viewportCenter = viewportHeight / 1.5;
+      
+      // Когда верх статьи достигает середины viewport
+      if (rect.top <= viewportCenter) {
+        // Вычисляем прогресс разворачивания (0 когда верх на середине, 1 когда полностью развернуто)
+        const scrollProgress = Math.min(1, Math.max(0, (viewportCenter - rect.top) / (fullContentHeight - minHeight)));
+        
+        // Вычисляем текущую высоту
+        const currentHeight = minHeight + (fullContentHeight - minHeight) * scrollProgress;
+        article.style.height = `${currentHeight}px`;
+      } else {
+        // До начала разворачивания - минимальная высота
+        article.style.height = `${minHeight}px`;
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Вызываем сразу для начального состояния
+  };
+
+  setupAboutProblemUnfold();
 });
