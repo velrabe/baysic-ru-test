@@ -446,14 +446,14 @@ body {
 }
 
 .about-problem-media {
-    border-radius: 24px;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .about-problem-image {
     display: block;
     width: 100%;
     height: auto;
+    border-radius: 24px;
 }
 
 .about-problem-article {
@@ -615,6 +615,7 @@ body {
     color: #374151;
     margin-top: 4px;
     margin-bottom: 72px;
+    opacity: 0.3;
 }
 
 .control-intro {
@@ -836,13 +837,13 @@ body {
 }
 
 .about-problem-cta-inner {
-    border-radius: 24px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 55%, #ffffff 100%);
-    padding: 128px 20px 18px;
+    border-radius: 16px;
+    background: radial-gradient(215.11% 111.8% at 100% 50%, #9279E8 0%, rgba(146, 121, 232, 0.00) 100%), radial-gradient(144.72% 111.8% at 0% 0%, rgba(118, 181, 253, 0.50) 0%, rgba(118, 181, 253, 0.00) 100%), radial-gradient(50% 50% at 50% 50%, #CBE9FC 0%, rgba(203, 233, 252, 0.00) 100%), #1613C7;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    color: #111827;
+    color: #ffffff;
     position: absolute;
     left: 0;
     right: 0;
@@ -854,16 +855,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
+    gap: 24px;
 }
 
 .about-problem-cta-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 300;
-    background: linear-gradient(135deg, #9279E8, #76B5FD);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: #ffffff;
 }
 
 .about-problem-cta-button {
@@ -871,12 +869,12 @@ body {
     padding: 1rem 2rem;
     font-size: 1rem;
     font-weight: 600;
-    color: white;
+    color: #111827;
     border: none;
     border-radius: 34px;
     cursor: pointer;
-    background: radial-gradient(215.11% 111.8% at 100% 50%, #9279E8 0%, rgba(146, 121, 232, 0.00) 100%), radial-gradient(144.72% 111.8% at 0% 0%, rgba(118, 181, 253, 0.50) 0%, rgba(118, 181, 253, 0.00) 100%), radial-gradient(50% 50% at 50% 50%, #CBE9FC 0%, rgba(203, 233, 252, 0.00) 100%), #1613C7;
-    box-shadow: 0 0 16px 0 #FFF inset;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .about-title {
@@ -1564,7 +1562,7 @@ body {
     }
 
     .about-problem-cta-inner {
-        border-radius: 20px;
+        border-radius: 16px;
     }
 
     .why-works,

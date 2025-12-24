@@ -17,14 +17,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleScroll = () => {
     toggleFloatingButton();
 
-    const heroImage = document.querySelector('.hero-image[data-parallax]');
-    if (heroImage) {
-      const rect = heroImage.getBoundingClientRect();
+    // Обрабатываем все элементы с data-parallax
+    const parallaxElements = document.querySelectorAll('[data-parallax]');
+    parallaxElements.forEach((element) => {
+      const rect = element.getBoundingClientRect();
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const centerOffset = rect.top + rect.height / 2 - viewportHeight / 2;
-      const parallaxOffset = -centerOffset * 0.5; // 50% скорости скролла
-      heroImage.style.transform = `translateY(${parallaxOffset}px)`;
-    }
+      const currentScrollY = window.scrollY;
+      
+      // Сохраняем позицию, когда элемент только полностью вошел в viewport
+      if (element._entryScrollY === undefined) {
+        // Проверяем, полностью ли элемент в viewport
+        if (rect.top <= 0 && rect.bottom >= viewportHeight) {
+          element._entryScrollY = currentScrollY;
+        }
+      }
+      
+      // Параллакс применяется только когда элемент полностью в viewport
+      const isFullyInViewport = rect.top <= 0 && rect.bottom >= viewportHeight;
+      
+      if (isFullyInViewport && element._entryScrollY !== undefined) {
+        // Вычисляем, насколько проскроллена страница от момента входа элемента в viewport
+        const scrollDelta = currentScrollY - element._entryScrollY;
+        // Применяем параллакс: элемент движется в 2 раза медленнее (коэффициент 0.5)
+        const parallaxOffset = scrollDelta * 0.5;
+        element.style.transform = `translateY(${parallaxOffset}px)`;
+      } else {
+        // До полного входа в viewport или после выхода - без параллакса
+        element.style.transform = '';
+        // Сбрасываем точку входа, если элемент вышел из viewport
+        if (!isFullyInViewport) {
+          element._entryScrollY = undefined;
+        }
+      }
+    });
   };
 
   window.addEventListener('scroll', handleScroll, { passive: true });
