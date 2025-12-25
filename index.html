@@ -245,30 +245,156 @@
 
     <section class="about" id="about">
         <div class="about-inner">
-            <h2 class="about-title">О приложении</h2>
             <div class="about-cards">
                 <article class="about-card">
-                    <img src="img/about-img/a1-lock.png" alt="Умная пауза" class="about-card-image">
+                    <div class="about-card-ui-preview">
+                        <div class="task-card">
+                            <div class="task-card-header">
+                                <span class="task-card-label">Задание</span>
+                                <span class="task-card-progress">1/3</span>
+                            </div>
+                            <div class="task-card-question">
+                                <span class="task-question-text">3 + 2 = ?</span>
+                            </div>
+                            <div class="task-card-answers">
+                                <button class="task-answer"><span class="task-answer-text">4</span></button>
+                                <button class="task-answer task-answer--correct"><span class="task-answer-text">5</span></button>
+                                <button class="task-answer"><span class="task-answer-text">6</span></button>
+                                <button class="task-answer"><span class="task-answer-text">7</span></button>
+                            </div>
+                            <button class="task-submit-button">
+                                <span>Ответить</span>
+                                <div class="task-submit-reward">
+                                    <img src="img/about-img/coin.png" alt="Монета" class="task-submit-reward-icon">
+                                    <span class="task-submit-reward-text">+25</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
                     <h3 class="about-card-title">Умная пауза с заданием на логику и внимание</h3>
                     <p class="about-card-text">Ребёнок выполняет задание или смотрит обучающий контент, зарабатывая баллы.</p>
                 </article>
                 <article class="about-card">
-                    <img src="img/about-img/a2-edu.png" alt="Задания от родителей" class="about-card-image">
+                    <div class="about-card-ui-preview">
+                        <div class="task-card">
+                            <div class="task-card-header">
+                                <span class="task-card-label">Прочитать 10 страниц  <br>и пересказать</span>
+                            </div>
+                            <div class="task-card-content">
+                                <div class="task-rewards-combined">
+                                    <div class="task-reward-item">
+                                        <div class="task-reward-coin-wrapper">
+                                            <img src="img/about-img/coin.png" alt="Монета" class="task-reward-icon task-reward-icon--coin">
+                                            <div class="task-reward-coin-shimmer"></div>
+                                        </div>
+                                        <span class="task-reward-text">+50Р</span>
+                                    </div>
+                                    <div class="task-reward-item task-reward-item--info">
+                                        <img src="img/ui-icons/check.svg" alt="" class="task-reward-info-icon">
+                                        <span class="task-reward-info-text">Фото-отчет отправлен</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="task-submit-button" disabled>
+                                <span>Награда получена</span>
+                            </button>
+                        </div>
+                    </div>
                     <h3 class="about-card-title">Задания от родителей</h3>
                     <p class="about-card-text">Создавайте свои задания и назначайте награду в денежном виде или за баллы, которые можно обменять на подарок.</p>
                 </article>
                 <article class="about-card">
-                    <img src="img/about-img/a3-sport.png" alt="Разминка и здоровая минутка" class="about-card-image">
+                    <div class="about-card-ui-preview">
+                        <div class="task-card">
+                            <div class="task-card-header">
+                                <span class="task-card-label">Здоровая минутка</span>
+                            </div>
+                            <div class="task-card-content task-card-content--exercise">
+                                <div class="exercise-timer-container">
+                                    <div class="exercise-timer">
+                                        <span class="timer-text">00:08</span>
+                                    </div>
+                                    <div class="exercise-progress">
+                                        <div class="exercise-progress-track">
+                                            <div class="exercise-progress-fill">
+                                                <div class="exercise-progress-shimmer"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="exercise-descriptor">Влево → вверх → вправо → вниз в течение 10 сек (до звукового сигнала)</p>
+                            </div>
+                            <button class="task-submit-button task-submit-button--outline">
+                                <span>Пауза</span>
+                                <svg class="task-submit-icon" width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="5" y="4" width="2" height="8" rx="1" fill="currentColor"/>
+                                    <rect x="9" y="4" width="2" height="8" rx="1" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                     <h3 class="about-card-title">Разминка и здоровая минутка</h3>
                     <p class="about-card-text">Развивайте физическое здоровье ребёнка и защищайте глаза от перенапряжения.</p>
                 </article>
                 <article class="about-card">
-                    <img src="img/about-img/a4-hab.png" alt="Бережное переключение" class="about-card-image">
+                    <div class="about-card-ui-preview">
+                        <div class="task-card">
+                            <div class="task-card-header">
+                                <span class="task-card-label">Осталось 2:00</span>
+                            </div>
+                            <div class="task-card-content task-card-content--timer">
+                                <div class="timer-center-icon">⏳</div>
+                                <p class="timer-notification">Скоро перерыв</p>
+                                <p class="timer-action">Перервы или задание?</p>
+                            </div>
+                            <div class="timer-buttons">
+                                <button class="timer-button timer-button--break">Перерыв</button>
+                                <button class="timer-button timer-button--task">
+                                    <span>Задание</span>
+                                    <div class="task-submit-reward">
+                                        <img src="img/about-img/coin.png" alt="Монета" class="task-submit-reward-icon">
+                                        <span class="task-submit-reward-text">+25</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <h3 class="about-card-title">Бережное переключение внимания</h3>
                     <p class="about-card-text">Предупреждаем заранее об окончании времени и о скором переключении внимания.</p>
                 </article>
                 <article class="about-card">
-                    <img src="img/about-img/a5-geo.png" alt="Семейный рейтинг" class="about-card-image">
+                    <div class="about-card-ui-preview">
+                        <div class="task-card">
+                            <div class="task-card-header">
+                                <span class="task-card-label">Семейная доска</span>
+                            </div>
+                            <div class="task-card-content task-card-content--family">
+                                <div class="family-list">
+                                    <div class="family-member family-member--masha">
+                                        <img src="img/about-img/masha.png" alt="Маша" class="family-member-icon">
+                                        <span class="family-member-name">Маша</span>
+                                        <span class="family-member-score">120</span>
+                                        <span class="family-member-star">★</span>
+                                    </div>
+                                    <div class="family-member family-member--vanya">
+                                        <img src="img/about-img/ivan.png" alt="Ваня" class="family-member-icon">
+                                        <span class="family-member-name">Ваня</span>
+                                        <span class="family-member-score family-member-score--vanya">95</span>
+                                        <span class="family-member-star">★</span>
+                                    </div>
+                                    <div class="family-member family-member--papa">
+                                        <img src="img/about-img/dad.png" alt="Папа" class="family-member-icon">
+                                        <span class="family-member-name">Папа</span>
+                                        <span class="family-member-score">80</span>
+                                        <span class="family-member-star">★</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="task-submit-button task-submit-button--purple">
+                                <span>Добавить задание</span>
+                            </button>
+                        </div>
+                    </div>
                     <h3 class="about-card-title">Семейный рейтинг</h3>
                     <p class="about-card-text">Создавайте доску с заданиями для семьи и формируйте полезные привычки вместе.</p>
                 </article>

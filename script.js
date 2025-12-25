@@ -474,4 +474,91 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   setupAboutProblemUnfold();
+
+  // Анимация семейной доски
+  const setupFamilyBoardAnimation = () => {
+    const vanyaScoreEl = document.querySelector('.family-member-score--vanya');
+    const vanyaMemberEl = document.querySelector('.family-member--vanya');
+    const mashaMemberEl = document.querySelector('.family-member--masha');
+    
+    if (!vanyaScoreEl || !vanyaMemberEl || !mashaMemberEl) return;
+
+    // Вычисляем высоту карточки один раз в начале
+    const cardHeight = mashaMemberEl.getBoundingClientRect().height;
+    const gap = 10; // gap между элементами
+    const offset = cardHeight + gap; // фиксированное смещение
+
+    const animateScore = (from, to, duration, callback) => {
+      const startTime = performance.now();
+
+      const animate = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const current = Math.round(from + (to - from) * progress);
+        vanyaScoreEl.textContent = current;
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          if (callback) callback();
+        }
+      };
+
+      requestAnimationFrame(animate);
+    };
+
+    const moveCards = (vanyaToTop, callback) => {
+      if (vanyaToTop) {
+        // Устанавливаем z-index чтобы Ваня был сверху
+        vanyaMemberEl.style.zIndex = '100';
+        mashaMemberEl.style.zIndex = '99';
+        
+        // Ваня вверх, Маша вниз
+        vanyaMemberEl.style.transform = `translateY(-${offset}px)`;
+        mashaMemberEl.style.transform = `translateY(${offset}px)`;
+      } else {
+        // Обратный процесс
+        mashaMemberEl.style.zIndex = '100';
+        vanyaMemberEl.style.zIndex = '99';
+        
+        // Ваня вниз, Маша вверх
+        vanyaMemberEl.style.transform = `translateY(0px)`;
+        mashaMemberEl.style.transform = `translateY(0px)`;
+      }
+      
+      // После завершения анимации сбрасываем z-index
+      setTimeout(() => {
+        vanyaMemberEl.style.zIndex = '';
+        mashaMemberEl.style.zIndex = '';
+        
+        if (callback) callback();
+      }, 500);
+    };
+
+    const cycle = () => {
+      // Шаг 1: Увеличиваем счетчик с 95 до 145
+      animateScore(95, 145, 2000, () => {
+        // Шаг 2: Перемещаем карточки (Ваня наверх)
+        moveCards(true, () => {
+          // Ждем немного наверху
+          setTimeout(() => {
+            // Шаг 3: Уменьшаем счетчик с 145 до 95
+            animateScore(145, 95, 2000, () => {
+              // Шаг 4: Возвращаем карточки обратно
+              moveCards(false, () => {
+                // Повторяем цикл через 1 секунду
+                setTimeout(cycle, 1000);
+              });
+            });
+          }, 2000);
+        });
+      });
+    };
+
+    // Запускаем цикл через 1 секунду после загрузки
+    setTimeout(cycle, 1000);
+  };
+
+  setupFamilyBoardAnimation();
 });
