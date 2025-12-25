@@ -428,6 +428,28 @@ body {
 .about-inner {
     margin: 0 auto;
     padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-section-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #111827;
+    text-align: center;
+    margin: 0 0 12px 0;
+}
+
+.about-section-description {
+    font-size: 1.25rem;
+    text-align: center;
+    margin: 0 0 64px 0;
+    max-width: 600px;
+    background: radial-gradient(215.11% 111.8% at 100% 50%, #9279E8 0%, rgba(146, 121, 232, 0.00) 100%), radial-gradient(144.72% 111.8% at 0% 0%, rgba(118, 181, 253, 0.50) 0%, rgba(118, 181, 253, 0.00) 100%), radial-gradient(50% 50% at 50% 50%, #CBE9FC 0%, rgba(203, 233, 252, 0.00) 100%), #1613C7;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .about-problem {
@@ -885,7 +907,7 @@ body {
 .about-cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 8px;
     justify-content: center;
 }
 
@@ -894,8 +916,7 @@ body {
     max-width: 240px;
     flex: 0 0 auto;
     border-radius: 28px;
-    background: #ece8f8;
-    box-shadow: 0 10px 30px rgba(18, 33, 79, 0.06);
+    background: #f6f3ff;
     padding: 16px 16px 20px;
     display: flex;
     flex-direction: column;
@@ -926,10 +947,7 @@ body {
     background: linear-gradient(135deg, #FEFEFE 0%, #F8F8F8 100%);
     border-radius: 20px;
     padding: 16px;
-    box-shadow: 
-        0 8px 24px rgba(0, 0, 0, 0.08),
-        0 4px 12px rgba(0, 0, 0, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -1054,7 +1072,7 @@ body {
     color: #FFFFFF;
     font-size: 0.9375rem;
     font-weight: 600;
-    cursor: pointer;
+    cursor: default;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1074,8 +1092,8 @@ body {
 
 .task-submit-button--purple:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.8) inset, 0 4px 12px rgba(0, 0, 0, 0.2);
-    background: radial-gradient(215.11% 111.8% at 100% 50%, #9279E8 0%, rgba(146, 121, 232, 0.00) 100%), radial-gradient(144.72% 111.8% at 0% 0%, rgba(118, 181, 253, 0.50) 0%, rgba(118, 181, 253, 0.00) 100%), radial-gradient(50% 50% at 50% 50%, #CBE9FC 0%, rgba(203, 233, 252, 0.00) 100%), #1613C7;
+    box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.8) inset, 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    background: radial-gradient(215.11% 111.8% at 100% 50%, #9279E8 0%, rgba(146, 121, 232, 0.00) 100%), radial-gradient(144.72% 111.8% at 0% 0%, rgba(118, 181, 253, 0.50) 0%, rgba(118, 181, 253, 0.00) 100%), radial-gradient(50% 50% at 50% 50%, #CBE9FC 0%, rgba(203, 233, 252, 0.00) 100%), #1613C7 !important;
 }
 
 .task-submit-button--outline {
@@ -1086,12 +1104,12 @@ body {
 }
 
 .task-submit-button--outline:hover {
-    background-color: rgba(146, 121, 232, 0.08);
-    box-shadow: none;
+    background-color: rgba(146, 121, 232, 0.08) !important;
+    box-shadow: none !important;
     transform: translateY(-2px);
 }
 
-.task-submit-button:hover {
+.task-submit-button:not(.task-submit-button--purple):not(.task-submit-button--outline):hover {
     transform: translateY(-2px);
     box-shadow: 
         0 6px 16px rgba(251, 191, 36, 0.5),
@@ -1547,7 +1565,7 @@ body {
     position: relative;
     width: 100vw;
     min-height: 100vh;
-    background: linear-gradient(180deg, #6ECCFE 0%, #E9F9FD 100%);
+    background: linear-gradient(180deg, #c1e9ff 0%, #E9F9FD 100%);
     padding: 0;
     overflow: hidden;
     border-top-left-radius: 48px;
@@ -1805,7 +1823,7 @@ body {
 }
 
 .why-works {
-    padding: 48px 0 0;
+    padding: 48px 0 96px;
     background-color: #ffffff;
 }
 
@@ -1816,6 +1834,10 @@ body {
     display: flex;
     align-items: center;
     gap: 40px;
+}
+
+.why-works--reversed .why-works-inner {
+    flex-direction: row-reverse;
 }
 
 .why-works-content {
@@ -2300,7 +2322,7 @@ body {
     .about-dec-steps {
         gap: 16px;
     }
-
+    
     .about-dec-step {
         padding: 20px;
     }
@@ -2343,10 +2365,11 @@ body {
     }
 
     .why-works {
-        padding: 40px 0 0;
+        padding: 40px 0 64px;
     }
 
-    .why-works-inner {
+    .why-works-inner,
+    .why-works--reversed .why-works-inner {
         flex-direction: column;
         gap: 24px;
         padding: 0 16px;
@@ -2551,7 +2574,7 @@ body {
     }
 
     .download-banner-content {
-        flex-direction: column;
+    flex-direction: column;
         padding: 32px 24px;
         gap: 32px;
     }
