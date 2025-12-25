@@ -216,139 +216,99 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  recolorFloatingIcon();
-  setupBlogIconHover();
-  setupMobileMenu();
-  setupCloudsMotion();
+  const setupAboutDecCloudsMotion = () => {
+    const container = document.querySelector('.about-dec-clouds');
+    if (!container) return;
 
-  const setupAboutCarousel = () => {
-    const viewport = document.querySelector('.about-cards-viewport');
-    const track = document.querySelector('.about-cards-track');
-    if (!viewport || !track) return;
-
-    const baseCards = Array.from(track.children);
-    if (!baseCards.length) return;
-
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-    const measureTotalWidth = () =>
-      Array.from(track.children).reduce((sum, el) => sum + el.offsetWidth, 0);
-
-    const fits = () => measureTotalWidth() <= viewport.clientWidth + 1;
-
-    if (fits()) {
-      track.style.justifyContent = 'center';
-      track.style.transform = '';
-      return;
-    }
-
-    // если не влезают — выравниваем влево
-    track.style.justifyContent = 'flex-start';
-
-    // для мобильных даём возможность ручного скролла со снаппингом
-    if (isMobile) {
-      const baseWidth = measureTotalWidth();
-      // продублируем карточки один раз для бесшовной прокрутки
-      baseCards.forEach((card) => {
-        const clone = card.cloneNode(true);
-        track.appendChild(clone);
-      });
-
-      let auto = true;
-      let lastTime = performance.now();
-      const speed = 40; // px / sec
-
-      const loopWidth = baseWidth;
-
-      const step = (now) => {
-        const dt = (now - lastTime) / 1000;
-        lastTime = now;
-
-        if (auto) {
-          viewport.scrollLeft += speed * dt;
-          if (viewport.scrollLeft >= loopWidth) {
-            viewport.scrollLeft -= loopWidth;
-          }
-        }
-
-        requestAnimationFrame(step);
-      };
-
-      const pauseAuto = () => {
-        auto = false;
-        if (pauseAuto._timer) clearTimeout(pauseAuto._timer);
-        pauseAuto._timer = setTimeout(() => {
-          auto = true;
-        }, 3000);
-      };
-
-      viewport.addEventListener('wheel', pauseAuto, { passive: true });
-      viewport.addEventListener('touchstart', pauseAuto, { passive: true });
-      viewport.addEventListener('pointerdown', pauseAuto, { passive: true });
-
-      requestAnimationFrame((t) => {
-        lastTime = t;
-        requestAnimationFrame(step);
-      });
-
-      return;
-    }
-
-    // десктоп: бесконечная лента по transform
-    while (measureTotalWidth() < viewport.clientWidth * 2) {
-      baseCards.forEach((card) => {
-        const clone = card.cloneNode(true);
-        track.appendChild(clone);
-});
-    }
-
-    let items = Array.from(track.children).map((el) => ({
+    const clouds = Array.from(container.querySelectorAll('.about-dec-cloud'));
+    if (!clouds.length) return;
+            
+    const states = clouds.map((el, index) => ({
       el,
-      width: el.offsetWidth,
+      x: 0,
+      y: 0,
+      direction: Math.random() < 0.5 ? 1 : -1,
+      speed: 10 + Math.random() * 20,
+      index,
     }));
 
-    const gap = (() => {
-      const style = window.getComputedStyle(track);
-      const gapVal = style.columnGap || style.gap || '0';
-      const n = parseFloat(gapVal);
-      return Number.isNaN(n) ? 0 : n;
-    })();
+    const initCloud = (state, spread = false) => {
+      const containerWidth = container.offsetWidth || 1;
+      const containerHeight = container.offsetHeight || 1;
+      const el = state.el;
 
-    items = items.map((item) => ({
-      ...item,
-      fullWidth: item.width + gap,
-    }));
+      const cloudHeight = el.offsetHeight || containerHeight * 0.2;
+      const maxTop = Math.max(0, containerHeight * 0.5 - cloudHeight);
+      const top = Math.random() * maxTop;
+      state.y = top;
+      el.style.top = `${top}px`;
 
-    let offset = 0;
-    const speed = 40; // px / sec
+      const cloudWidth = el.offsetWidth || cloudHeight * 2;
+
+      if (spread) {
+        // случайная стартовая позиция по всей ширине, чуть заходя за края
+        state.x = (Math.random() * 1.4 - 0.2) * containerWidth - cloudWidth / 2;
+        // направление зависит от стороны: если слева — вправо, если справа — влево
+        const center = containerWidth / 2;
+        state.direction = state.x + cloudWidth / 2 < center ? 1 : -1;
+        state.speed = 10 + Math.random() * 20;
+      } else {
+        // перезапуск строго с краёв, в случайном направлении
+        state.direction = Math.random() < 0.5 ? 1 : -1;
+        state.speed = 10 + Math.random() * 20;
+        if (state.direction > 0) {
+          state.x = -cloudWidth - Math.random() * (containerWidth * 0.3);
+        } else {
+          state.x = containerWidth + Math.random() * (containerWidth * 0.3);
+                }
+            }
+
+      el.style.transform = `translate3d(${state.x}px, 0, 0)`;
+    };
+    
+    // начальная расстановка — равномерно по ширине
+    requestAnimationFrame(() => {
+      states.forEach((s) => initCloud(s, true));
+    });
+
     let lastTime = performance.now();
 
-    const step = (now) => {
+    const loop = (now) => {
       const dt = (now - lastTime) / 1000;
       lastTime = now;
 
-      offset -= speed * dt;
+      const containerWidth = container.offsetWidth || 1;
 
-      // recycle items that left the viewport on the left
-      while (items.length && -offset > items[0].fullWidth) {
-        const first = items.shift();
-        offset += first.fullWidth;
-        track.appendChild(first.el);
-        items.push(first);
-      }
+      states.forEach((state) => {
+        const el = state.el;
+        const cloudWidth = el.offsetWidth || 0;
 
-      track.style.transform = `translate3d(${offset}px, 0, 0)`;
+        state.x += state.direction * state.speed * dt;
+        
+        if (state.direction > 0 && state.x > containerWidth + cloudWidth) {
+          initCloud(state, false);
+        } else if (state.direction < 0 && state.x < -cloudWidth) {
+          initCloud(state, false);
+        } else {
+          el.style.transform = `translate3d(${state.x}px, 0, 0)`;
+        }
+      });
 
-      requestAnimationFrame(step);
+      requestAnimationFrame(loop);
     };
 
     requestAnimationFrame((t) => {
       lastTime = t;
-      requestAnimationFrame(step);
+      requestAnimationFrame(loop);
     });
   };
 
-  setupAboutCarousel();
+  recolorFloatingIcon();
+  setupBlogIconHover();
+  setupMobileMenu();
+  setupCloudsMotion();
+  setupAboutDecCloudsMotion();
+
 
   const setupAboutDecorReveal = () => {
     const bg = document.querySelector('.about-dec-bg');
