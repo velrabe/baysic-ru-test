@@ -2288,12 +2288,14 @@ body {
     }
 
     .about-cards {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .about-card {
-        max-width: 100%;
+        max-width: 240px;
+        min-width: 240px;
     }
 
     .about-problem {
@@ -2319,10 +2321,25 @@ body {
         gap: 24px;
     }
 
-    .control-intro-media,
+    .control-intro--image-right .control-intro-inner {
+        flex-direction: column;
+    }
+
+    .control-intro-media {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
     .control-intro-content {
         width: 100%;
         max-width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+
+    .control-feature-list {
+        display: none;
     }
 
     .about-dec {
@@ -2399,9 +2416,28 @@ body {
         padding: 0 16px;
     }
 
-    .why-works-media,
+    .why-works .why-works-media {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+        order: -1;
+    }
+
+    .why-works--reversed .why-works-media {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+        order: 0;
+    }
+
     .why-works-content {
         width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+
+    .why-works-button {
+        align-self: center;
     }
 
     .why-works-title {
@@ -3198,7 +3234,7 @@ body {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .header-inner {
         padding: 0 16px;
     }
