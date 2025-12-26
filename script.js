@@ -598,17 +598,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const getScrollWidth = () => {
       if (cards.length === 0) return 0;
       
-      // Используем getBoundingClientRect для точного измерения реального расстояния
-      // между левым краем первой карточки и левым краем второй карточки
-      if (cards.length >= 2) {
-        const firstCardRect = cards[0].getBoundingClientRect();
-        const secondCardRect = cards[1].getBoundingClientRect();
-        // Реальное расстояние между карточками (включая gap)
-        return secondCardRect.left - firstCardRect.left;
-      }
+      const isMobile = window.innerWidth < 768;
       
-      // Если карточка только одна, используем её ширину
-      return cards[0].offsetWidth;
+      if (isMobile) {
+        // На мобильной версии показывается 1 карточка, прокручиваем на ширину одной карточки + gap
+        if (cards.length >= 1) {
+          const firstCardRect = cards[0].getBoundingClientRect();
+          const sliderRect = slider.getBoundingClientRect();
+          // Ширина карточки + gap (16px на мобильной версии)
+          return firstCardRect.width + 16;
+        }
+        return cards[0].offsetWidth + 16;
+      } else {
+        // На десктопе показывается 2 карточки, используем расстояние между первой и второй
+        if (cards.length >= 2) {
+          const firstCardRect = cards[0].getBoundingClientRect();
+          const secondCardRect = cards[1].getBoundingClientRect();
+          // Реальное расстояние между карточками (включая gap)
+          return secondCardRect.left - firstCardRect.left;
+        }
+        // Если карточка только одна, используем её ширину
+        return cards[0].offsetWidth;
+      }
     };
 
     // Вычисляем количество страниц (по 2 карточки на страницу)
@@ -618,13 +629,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Проверяем, видна ли последняя карточка (или предпоследняя на десктопе)
     const isLastCardVisible = () => {
-      const sliderRect = slider.getBoundingClientRect();
+      const isDesktop = window.innerWidth >= 768;
       
       // На десктопе (>= 768px) показывается 2 карточки одновременно
       // Блокируем кнопку когда видны карточки 3-4 (предпоследняя и последняя)
-      const isDesktop = window.innerWidth >= 768;
-      
       if (isDesktop && cards.length >= 4) {
+        const sliderRect = slider.getBoundingClientRect();
         // Проверяем видимость предпоследней карточки (индекс 3)
         const secondToLastCard = cards[3];
         if (secondToLastCard) {
@@ -634,15 +644,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       
-      // На мобиле или если карточек меньше 4, проверяем последнюю карточку
-      const lastCard = cards[cards.length - 1];
-      if (!lastCard) return false;
+      // На мобиле показывается 1 карточка
+      // Проверяем по позиции прокрутки: если прокрутили на (количество карточек - 1) * scrollWidth,
+      // то последняя карточка видна
+      const scrollWidth = getScrollWidth();
+      const maxScroll = -(cards.length - 1) * scrollWidth;
       
-      const lastCardRect = lastCard.getBoundingClientRect();
-      
-      // Проверяем, видна ли последняя карточка внутри контейнера слайдера
-      // Учитываем небольшую погрешность для плавной работы
-      return lastCardRect.right <= sliderRect.right + 20;
+      // Если текущая позиция прокрутки меньше или равна максимальной, значит последняя карточка видна
+      return currentScroll <= maxScroll + 5; // +5 для небольшой погрешности
     };
 
     // Обновляем состояние кнопок
@@ -665,11 +674,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Обновляем индикаторы на основе текущей позиции (карточки, а не страницы)
     const updatePagination = () => {
       const scrollWidth = getScrollWidth();
+      const isMobile = window.innerWidth < 768;
       
-      // Вычисляем индекс первой видимой карточки
-      // currentScroll = 0 -> показываются карточки 0-1, активна карточка 0
-      // currentScroll = -scrollWidth -> показываются карточки 1-2, активна карточка 1
-      // currentScroll = -2*scrollWidth -> показываются карточки 2-3, активна карточка 2
+      // Вычисляем индекс видимой карточки
+      // На десктопе: currentScroll = 0 -> показываются карточки 0-1, активна карточка 0
+      // На мобиле: currentScroll = 0 -> показывается карточка 0, активна карточка 0
       const cardsScrolled = Math.round(Math.abs(currentScroll) / scrollWidth);
       const activeCardIndex = Math.min(cardsScrolled, cards.length - 1);
       

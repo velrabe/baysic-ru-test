@@ -2279,6 +2279,10 @@ body {
 }
 
 @media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
     .about {
         padding: 0 0 72px;
     }
@@ -2311,6 +2315,10 @@ body {
         font-size: 1.625rem;
     }
 
+    .about-problem-article-intro {
+        font-size: 1.5rem;
+    }
+
     .control-intro {
         padding: 40px 0 28px;
     }
@@ -2336,6 +2344,10 @@ body {
         max-width: 100%;
         text-align: center;
         align-items: center;
+    }
+
+    .control-intro-title {
+        font-size: 1.5rem;
     }
 
     .control-feature-list {
@@ -2434,6 +2446,11 @@ body {
         width: 100%;
         text-align: center;
         align-items: center;
+    }
+
+    .why-works-list {
+        text-align: left;
+        align-self: flex-start;
     }
 
     .why-works-button {
@@ -2741,9 +2758,9 @@ body {
     }
     
     .review-card {
-        width: calc((100% - 16px) / 2);
-        min-width: calc((100% - 16px) / 2);
-        max-width: calc((100% - 16px) / 2);
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -2838,7 +2855,8 @@ body {
     bottom: 0;
     left: 70%;
     transform: translateX(-50%);
-    height: auto;
+    height: 60%;
+    width: auto;
     max-height: 100%;
     width: auto;
     z-index: 1;
@@ -3224,13 +3242,24 @@ body {
         justify-content: center;
     }
 
+    .footer-bottom-left {
+        order: 1;
+    }
+
+    .footer-bottom-right {
+        order: 2;
+    }
+
     .footer-bottom-center {
+        order: 3;
         padding: 8px 0;
     }
 
     .footer-subscribe {
         width: 100%;
         min-width: 0;
+        max-width: 100%;
+        align-items: center;
     }
 }
 
