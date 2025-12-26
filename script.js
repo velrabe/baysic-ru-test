@@ -561,4 +561,157 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   setupFamilyBoardAnimation();
+
+  // Reviews Slider
+  const setupReviewsSlider = () => {
+    const slider = document.querySelector('.reviews-slider');
+    const track = document.querySelector('.reviews-slider-track');
+    const prevButton = document.querySelector('.reviews-nav-button--prev');
+    const nextButton = document.querySelector('.reviews-nav-button--next');
+    const paginationDots = document.querySelectorAll('.reviews-pagination-dot');
+    const cards = document.querySelectorAll('.review-card');
+
+    if (!slider || !track || !prevButton || !nextButton || cards.length === 0) return;
+
+    let currentScroll = 0;
+
+    // Вычисляем ширину прокрутки (ширина одной карточки + gap между карточками)
+    const getScrollWidth = () => {
+      if (cards.length === 0) return 0;
+      
+      // Используем getBoundingClientRect для точного измерения реального расстояния
+      // между левым краем первой карточки и левым краем второй карточки
+      if (cards.length >= 2) {
+        const firstCardRect = cards[0].getBoundingClientRect();
+        const secondCardRect = cards[1].getBoundingClientRect();
+        // Реальное расстояние между карточками (включая gap)
+        return secondCardRect.left - firstCardRect.left;
+      }
+      
+      // Если карточка только одна, используем её ширину
+      return cards[0].offsetWidth;
+    };
+
+    // Вычисляем количество страниц (по 2 карточки на страницу)
+    const getTotalPages = () => {
+      return Math.ceil(cards.length / 2);
+    };
+
+    // Проверяем, видна ли последняя карточка (или предпоследняя на десктопе)
+    const isLastCardVisible = () => {
+      const sliderRect = slider.getBoundingClientRect();
+      
+      // На десктопе (>= 768px) показывается 2 карточки одновременно
+      // Блокируем кнопку когда видны карточки 3-4 (предпоследняя и последняя)
+      const isDesktop = window.innerWidth >= 768;
+      
+      if (isDesktop && cards.length >= 4) {
+        // Проверяем видимость предпоследней карточки (индекс 3)
+        const secondToLastCard = cards[3];
+        if (secondToLastCard) {
+          const cardRect = secondToLastCard.getBoundingClientRect();
+          // Если предпоследняя карточка видна, значит показываются карточки 3-4
+          return cardRect.right <= sliderRect.right + 20;
+        }
+      }
+      
+      // На мобиле или если карточек меньше 4, проверяем последнюю карточку
+      const lastCard = cards[cards.length - 1];
+      if (!lastCard) return false;
+      
+      const lastCardRect = lastCard.getBoundingClientRect();
+      
+      // Проверяем, видна ли последняя карточка внутри контейнера слайдера
+      // Учитываем небольшую погрешность для плавной работы
+      return lastCardRect.right <= sliderRect.right + 20;
+    };
+
+    // Обновляем состояние кнопок
+    const updateButtons = () => {
+      // Блокируем кнопку влево в начальной позиции
+      if (Math.abs(currentScroll) < 1) {
+        prevButton.disabled = true;
+      } else {
+        prevButton.disabled = false;
+      }
+
+      // Блокируем кнопку вправо когда последняя карточка видна
+      if (isLastCardVisible()) {
+        nextButton.disabled = true;
+      } else {
+        nextButton.disabled = false;
+      }
+    };
+
+    // Обновляем индикаторы на основе текущей позиции (карточки, а не страницы)
+    const updatePagination = () => {
+      const scrollWidth = getScrollWidth();
+      
+      // Вычисляем индекс первой видимой карточки
+      // currentScroll = 0 -> показываются карточки 0-1, активна карточка 0
+      // currentScroll = -scrollWidth -> показываются карточки 1-2, активна карточка 1
+      // currentScroll = -2*scrollWidth -> показываются карточки 2-3, активна карточка 2
+      const cardsScrolled = Math.round(Math.abs(currentScroll) / scrollWidth);
+      const activeCardIndex = Math.min(cardsScrolled, cards.length - 1);
+      
+      paginationDots.forEach((dot, i) => {
+        if (i === activeCardIndex) {
+          dot.classList.add('reviews-pagination-dot--active');
+        } else {
+          dot.classList.remove('reviews-pagination-dot--active');
+        }
+      });
+    };
+
+    // Прокрутка влево
+    prevButton.addEventListener('click', () => {
+      if (prevButton.disabled) return;
+      
+      const scrollWidth = getScrollWidth();
+      currentScroll = currentScroll + scrollWidth;
+      
+      // Обновляем кнопки сразу, до начала анимации
+      updateButtons();
+      
+      track.style.transform = `translateX(${currentScroll}px)`;
+      
+      updatePagination();
+    });
+
+    // Прокрутка вправо
+    nextButton.addEventListener('click', () => {
+      if (nextButton.disabled) return;
+      
+      const scrollWidth = getScrollWidth();
+      currentScroll = currentScroll - scrollWidth;
+      
+      // Обновляем кнопки сразу, до начала анимации
+      updateButtons();
+      
+      track.style.transform = `translateX(${currentScroll}px)`;
+      
+      updatePagination();
+    });
+
+    // Обработка изменения размера окна
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Сбрасываем позицию при изменении размера
+        currentScroll = 0;
+        track.style.transform = `translateX(0px)`;
+        updateButtons();
+        updatePagination();
+      }, 250);
+    });
+
+    // Инициализация с небольшой задержкой для правильного вычисления размеров
+    setTimeout(() => {
+      updateButtons();
+      updatePagination();
+    }, 100);
+  };
+
+  setupReviewsSlider();
 });
