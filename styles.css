@@ -1037,6 +1037,13 @@ body {
     position: relative;
 }
 
+/* Убираем aspect-ratio для task-answer в первой карточке */
+.about-card:first-child .task-answer {
+    aspect-ratio: unset;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
 .task-answer:hover {
     transform: translateY(-1px);
     box-shadow: 
@@ -2298,8 +2305,17 @@ body {
     }
 
     .about-card {
-        max-width: 240px;
-        min-width: 240px;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    .about-card-ui-preview {
+        width: 100%;
+    }
+
+    .task-card {
+        width: 100%;
     }
 
     .about-problem {
@@ -2316,7 +2332,7 @@ body {
     }
 
     .about-problem-article-intro {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .control-intro {
@@ -2781,12 +2797,34 @@ body {
     }
 
     .reviews-slider-wrapper {
-        gap: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+        position: relative;
+    }
+
+    .reviews-slider {
+        width: 100%;
+        padding: 0 0 64px;
+        order: 1;
     }
 
     .reviews-nav-button {
         width: 40px;
         height: 40px;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .reviews-nav-button--prev {
+        order: 2;
+        left: calc(50% - 48px);
+    }
+
+    .reviews-nav-button--next {
+        order: 3;
+        left: calc(50% + 16px);
     }
 
     .reviews-nav-button svg {
@@ -2855,10 +2893,9 @@ body {
     bottom: 0;
     left: 70%;
     transform: translateX(-50%);
-    height: 60%;
+    height: 100%;
     width: auto;
     max-height: 100%;
-    width: auto;
     z-index: 1;
     opacity: 1;
     will-change: transform;
@@ -2978,6 +3015,13 @@ body {
         width: 80px;
         height: 80px;
     }
+
+    .download-banner-iphone {
+        bottom: 0;
+        height: 70%;
+        transform: translateX(-50%) translateY(0px) !important;
+        transition: none;
+    }
 }
 
 .site-footer {
@@ -3080,10 +3124,12 @@ body {
     display: flex;
     gap: 8px;
     align-items: flex-start;
+    width: 100%;
 }
 
 .footer-subscribe-input {
     flex: 1;
+    width: 100%;
     padding: 10px 14px;
     border: 1.5px solid #E5E7EB;
     border-radius: 8px;
@@ -3092,6 +3138,7 @@ body {
     background: #ffffff;
     transition: border-color 0.2s ease;
     min-width: 0;
+    box-sizing: border-box;
 }
 
 .footer-subscribe-input:focus {
@@ -3239,7 +3286,8 @@ body {
     .footer-bottom-right {
         width: 100%;
         padding: 0;
-        justify-content: center;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
 
     .footer-bottom-left {
@@ -3253,13 +3301,22 @@ body {
     .footer-bottom-center {
         order: 3;
         padding: 8px 0;
+        text-align: left;
+    }
+
+    .footer-legal {
+        text-align: left;
+    }
+
+    .footer-social {
+        justify-content: flex-start;
     }
 
     .footer-subscribe {
         width: 100%;
         min-width: 0;
         max-width: 100%;
-        align-items: center;
+        align-items: flex-start;
     }
 }
 

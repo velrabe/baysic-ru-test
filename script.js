@@ -370,6 +370,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!downloadBanner || !iphone) return;
 
     const handleScroll = () => {
+      // Отключаем параллакс на мобильной версии
+      if (window.innerWidth < 768) {
+        iphone.style.transform = 'translateX(-50%) translateY(0px)';
+        return;
+      }
+
       const bannerRect = downloadBanner.getBoundingClientRect();
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       
@@ -383,13 +389,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const viewportCenter = viewportHeight / 2;
       const offset = (viewportCenter - bannerCenter) * 0.1; // Небольшая акселерация
       
-      // Ограничиваем движение до ±20px
-      const parallaxOffset = Math.max(-20, Math.min(20, offset));
+      // Ограничиваем движение от 0px до 20px (вместо -20px до 20px)
+      const parallaxOffset = Math.max(0, Math.min(20, offset));
       
       iphone.style.transform = `translateX(-50%) translateY(${-parallaxOffset}px)`;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll();
   };
 
