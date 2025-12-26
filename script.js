@@ -120,12 +120,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     headerNav.querySelectorAll('.header-nav-link').forEach((link) => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
+        // Закрываем мобильное меню если открыто
         if (headerNav.classList.contains('is-open')) {
           headerNav.classList.remove('is-open');
           headerMenuToggle.setAttribute('aria-label', 'Открыть меню');
-            }
-        });
+        }
+        
+        // Обрабатываем якорные ссылки
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const targetId = href.substring(1);
+          const targetElement = document.getElementById(targetId);
+          
+          if (targetElement) {
+            e.preventDefault();
+            const headerHeight = document.querySelector('.site-header')?.offsetHeight || 0;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
     });
   };
 
@@ -258,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         state.speed = 10 + Math.random() * 20;
         if (state.direction > 0) {
           state.x = -cloudWidth - Math.random() * (containerWidth * 0.3);
-        } else {
+    } else {
           state.x = containerWidth + Math.random() * (containerWidth * 0.3);
                 }
             }
@@ -714,4 +733,111 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   setupReviewsSlider();
+
+  // Modal
+  const setupDownloadModal = () => {
+    const modal = document.getElementById('download-modal');
+    const closeButton = modal.querySelector('.modal-close');
+    const modalForm = modal.querySelector('.modal-form');
+
+    if (!modal) return;
+
+    // Функция открытия модалки
+    const openModal = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    // Функция закрытия модалки
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+
+    // Закрытие по клику на overlay
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Закрытие по кнопке
+    closeButton.addEventListener('click', closeModal);
+
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+
+    // Обработка формы
+    modalForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = modalForm.querySelector('.modal-input').value;
+      // Здесь можно добавить отправку на сервер
+      console.log('Email submitted:', email);
+      // Закрываем модалку после отправки
+      closeModal();
+    });
+
+    // Привязка к кнопкам
+    const triggerButtons = [
+      '.cta-button', // Попробовать бесплатно в hero
+      '.header-nav-cta', // Скачать приложение в хедере
+      '.control-feature-button', // Попробовать в control-intro
+      '.reviews-cta-button', // Присоединиться в секции отзывов
+      '.about-dec-button', // Кнопки сторов в about-dec
+      '.download-banner-button', // Кнопки сторов в download-banner
+      '.footer-store-link' // Кнопки сторов в футере
+    ];
+
+    triggerButtons.forEach(selector => {
+      const buttons = document.querySelectorAll(selector);
+      buttons.forEach(button => {
+        button.addEventListener('click', openModal);
+      });
+    });
+  };
+
+  setupDownloadModal();
+
+  // Smooth scroll for footer links
+  const footerLinks = document.querySelectorAll('.footer-link');
+  footerLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          e.preventDefault();
+          const headerHeight = document.querySelector('.site-header')?.offsetHeight || 0;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  });
+
+  // Footer subscribe form
+  const footerSubscribeForm = document.querySelector('.footer-subscribe-form');
+  if (footerSubscribeForm) {
+    footerSubscribeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = footerSubscribeForm.querySelector('.footer-subscribe-input').value;
+      // Здесь можно добавить отправку на сервер
+      console.log('Footer subscription:', email);
+      footerSubscribeForm.querySelector('.footer-subscribe-input').value = '';
+    });
+  }
 });
