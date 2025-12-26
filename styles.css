@@ -1823,7 +1823,7 @@ body {
 }
 
 .why-works {
-    padding: 48px 0 96px;
+    padding: 48px 0 0;
     background-color: #ffffff;
 }
 
@@ -1837,7 +1837,7 @@ body {
 }
 
 .why-works--reversed .why-works-inner {
-    flex-direction: row-reverse;
+    flex-direction: row;
 }
 
 .why-works-content {
@@ -2365,7 +2365,7 @@ body {
     }
 
     .why-works {
-        padding: 40px 0 64px;
+        padding: 40px 0 0;
     }
 
     .why-works-inner,
