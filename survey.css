@@ -1,0 +1,249 @@
+/* Survey invitation page */
+.page-survey,
+.page-survey .hero-description,
+.page-survey .survey-brand-descriptor {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.page-survey .hero-title,
+.page-survey .hero-title-accent {
+    font-family: 'Nunito', sans-serif;
+}
+
+.page-survey {
+    background-color: #F4F4FC;
+}
+
+/* Секция под баннером и футер — один цвет как у футера */
+.page-survey .download-banner {
+    background-color: #F4F4FC;
+}
+
+/* Hero: высота под контент, не под экран */
+.survey-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px 120px;
+    overflow: hidden;
+}
+
+.survey-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.survey-hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 45%, #F4F4FC 100%);
+}
+
+.survey-hero-clouds {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    height: 55%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.survey-cloud {
+    position: absolute;
+    opacity: 0.8;
+    width: auto;
+    height: auto;
+}
+
+.survey-cloud-xl { max-height: 32%; top: 5%; left: 10%; }
+.survey-cloud-l  { max-height: 28%; top: 12%; right: 15%; }
+.survey-cloud-m  { max-height: 22%; top: 8%; left: 50%; }
+.survey-cloud-s-1 { max-height: 18%; top: 18%; left: 25%; }
+.survey-cloud-s-2 { max-height: 16%; top: 22%; right: 30%; }
+.survey-cloud-xs-1 { max-height: 14%; top: 15%; right: 5%; }
+.survey-cloud-xs-2 { max-height: 12%; top: 25%; left: 5%; }
+
+.survey-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+}
+
+.survey-hero-image {
+    flex: 0 0 auto;
+    max-width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.survey-hero-image img {
+    width: 100%;
+    height: auto;
+    max-height: 560px;
+    object-fit: contain;
+}
+
+/* Левая колонка — контент по левому краю */
+.survey-content {
+    position: relative;
+    z-index: 3;
+    padding: 24px 0;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.survey-content .hero-title {
+    margin-left: 0;
+    margin-right: 0;
+    line-height: 1;
+}
+
+.survey-content .hero-description {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Лого 64×64 + текст справа */
+.survey-brand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.survey-brand-sign {
+    width: 64px;
+    height: 64px;
+    display: block;
+    flex-shrink: 0;
+}
+
+.survey-brand-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+}
+
+.survey-brand-text {
+    height: 24px;
+    width: auto;
+    display: block;
+}
+
+.survey-brand-descriptor {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    color: #9AA5B1;
+}
+
+.survey-cta-wrap {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.survey-hero-badge-text {
+    font-size: 0.95rem;
+    color: #4B5563;
+}
+
+.survey-content .cta-button {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* Footer: button "Перейти на сайт Baysic" */
+.survey-footer-site-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.survey-footer-site-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.45);
+}
+
+@media (max-width: 768px) {
+    .survey-hero {
+        padding: 60px 16px 0;
+    }
+
+    .survey-hero-inner {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    /* Картинка hero внизу — под кнопкой и текстом */
+    .survey-hero-image {
+        max-width: 100%;
+        order: 1;
+    }
+
+    .survey-content {
+        order: 0;
+    }
+
+    .survey-hero-image img {
+        max-height: 560px;
+    }
+
+    .survey-content {
+        align-items: center;
+        text-align: center;
+    }
+
+    /* Логотип по центру, под ним Baysic и «Родительский контроль» по центру */
+    .survey-brand {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .survey-brand-text-block {
+        align-items: center;
+    }
+
+    /* Кнопка сверху, под ней текст «+1 мес бесплатно» */
+    .survey-cta-wrap {
+        flex-direction: column;
+    }
+
+    .survey-content .hero-title {
+        font-size: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .survey-content .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

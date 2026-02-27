@@ -322,11 +322,95 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  const setupSurveyCloudsMotion = () => {
+    const container = document.querySelector('.survey-hero-clouds');
+    if (!container) return;
+
+    const clouds = Array.from(container.querySelectorAll('.survey-cloud'));
+    if (!clouds.length) return;
+
+    const states = clouds.map((el, index) => ({
+      el,
+      x: 0,
+      y: 0,
+      direction: Math.random() < 0.5 ? 1 : -1,
+      speed: 10 + Math.random() * 20,
+      index,
+    }));
+
+    const initCloud = (state, spread = false) => {
+      const containerWidth = container.offsetWidth || 1;
+      const containerHeight = container.offsetHeight || 1;
+      const el = state.el;
+
+      const cloudHeight = el.offsetHeight || containerHeight * 0.2;
+      const maxTop = Math.max(0, containerHeight * 0.5 - cloudHeight);
+      const top = Math.random() * maxTop;
+      state.y = top;
+      el.style.top = `${top}px`;
+
+      const cloudWidth = el.offsetWidth || cloudHeight * 2;
+
+      if (spread) {
+        state.x = (Math.random() * 1.4 - 0.2) * containerWidth - cloudWidth / 2;
+        const center = containerWidth / 2;
+        state.direction = state.x + cloudWidth / 2 < center ? 1 : -1;
+        state.speed = 10 + Math.random() * 20;
+      } else {
+        state.direction = Math.random() < 0.5 ? 1 : -1;
+        state.speed = 10 + Math.random() * 20;
+        if (state.direction > 0) {
+          state.x = -cloudWidth - Math.random() * (containerWidth * 0.3);
+        } else {
+          state.x = containerWidth + Math.random() * (containerWidth * 0.3);
+        }
+      }
+
+      el.style.transform = `translate3d(${state.x}px, 0, 0)`;
+    };
+
+    requestAnimationFrame(() => {
+      states.forEach((s) => initCloud(s, true));
+    });
+
+    let lastTime = performance.now();
+
+    const loop = (now) => {
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      const containerWidth = container.offsetWidth || 1;
+
+      states.forEach((state) => {
+        const el = state.el;
+        const cloudWidth = el.offsetWidth || 0;
+
+        state.x += state.direction * state.speed * dt;
+
+        if (state.direction > 0 && state.x > containerWidth + cloudWidth) {
+          initCloud(state, false);
+        } else if (state.direction < 0 && state.x < -cloudWidth) {
+          initCloud(state, false);
+        } else {
+          el.style.transform = `translate3d(${state.x}px, 0, 0)`;
+        }
+      });
+
+      requestAnimationFrame(loop);
+    };
+
+    requestAnimationFrame((t) => {
+      lastTime = t;
+      requestAnimationFrame(loop);
+    });
+  };
+
   recolorFloatingIcon();
   setupBlogIconHover();
   setupMobileMenu();
   setupCloudsMotion();
   setupAboutDecCloudsMotion();
+  setupSurveyCloudsMotion();
 
 
   const setupAboutDecorReveal = () => {
