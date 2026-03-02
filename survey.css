@@ -163,6 +163,12 @@
 .survey-hero-badge-text {
     font-size: 0.95rem;
     color: #4B5563;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.survey-hero-badge-text:hover {
+    color: #7c3aed;
 }
 
 .survey-content .cta-button {
@@ -190,6 +196,37 @@
 .survey-footer-site-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(124, 58, 237, 0.45);
+}
+
+/* Баннер на странице опроса: кнопка слева, сторы справа */
+.page-survey .download-banner-icon-wrapper {
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 8px;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+.page-survey .download-banner-more-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    border-radius: 999px;
+    background-color: #ffffff;
+    color: #1E3569;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.page-survey .download-banner-more-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -245,5 +282,11 @@
     .survey-content .hero-description {
         margin-left: auto;
         margin-right: auto;
+    }
+
+    /* Кнопки сторов в баннере — по левому краю на мобильном */
+    .page-survey .download-banner-icon-wrapper {
+        align-items: flex-start;
+        width: 100%;
     }
 }
