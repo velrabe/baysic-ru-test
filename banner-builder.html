@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор баннеров Baysic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="survey.css">
+    <style>
+        body {
+            background: #f3f4f6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: 24px;
+        }
+
+        .builder-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .builder-panel {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            column-gap: 16px;
+            row-gap: 16px;
+            align-items: flex-start;
+        }
+
+        .builder-group-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .builder-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+
+        .builder-row input[type="range"] {
+            flex: 1;
+        }
+
+        .builder-row input[type="number"] {
+            width: 64px;
+        }
+
+        .builder-text-input {
+            width: 100%;
+            padding: 6px 8px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            font-size: 0.85rem;
+        }
+
+        .builder-radio-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .builder-radio-row label {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+        }
+
+        .builder-radio-row input {
+            margin-right: 4px;
+        }
+
+        .builder-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 8px;
+            grid-column: 1 / -1;
+        }
+
+        .builder-download-btn {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: none;
+            background: #111827;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .builder-preview-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .builder-banner-frame {
+            display: inline-block;
+        }
+
+        .builder-banner-horizontal .download-banner-content {
+            width: var(--banner-width, 1152px);
+            height: var(--banner-height, auto);
+            border-radius: var(--banner-radius, 24px);
+            box-shadow: none;
+        }
+
+        .builder-banner-vertical .download-banner-content {
+            display: block;
+            width: var(--banner-width, 320px);
+            border-radius: var(--banner-radius, 24px);
+            padding: 24px;
+            padding-bottom: calc(var(--text-height, 260px) + 24px);
+            box-shadow: none;
+        }
+
+        .builder-banner-vertical .download-banner-text {
+            max-width: 100% !important;
+        }
+
+        .builder-download-banner .download-banner-iphone {
+            display: none;
+        }
+
+        .builder-download-banner .download-banner-content {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .builder-download-banner .download-banner-quiz-image {
+            position: absolute;
+            width: auto;
+        }
+
+        .builder-download-banner .cta-button {
+            text-decoration: none;
+        }
+
+        .builder-download-banner .download-banner-title {
+            font-family: 'Nunito', sans-serif;
+        }
+
+        @media (max-width: 960px) {
+            .builder-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="builder-layout">
+        <div class="builder-panel">
+            <div>
+                <div class="builder-group-title">Формат</div>
+                <div class="builder-radio-row">
+                    <label><input type="radio" name="layout" value="horizontal" checked> Горизонтальный</label>
+                    <label><input type="radio" name="layout" value="vertical"> Вертикальный</label>
+                </div>
+            </div>
+
+            <div>
+                <div class="builder-group-title">Ширина баннера (px)</div>
+                <div class="builder-row">
+                    <input id="widthRange" type="range" min="320" max="1200" value="1152">
+                    <input id="widthValue" type="number" min="320" max="1200" value="1152">
+                    <label><input type="checkbox" id="widthAuto" checked> авто</label>
+                </div>
+            </div>
+
+            <div>
+                <div class="builder-group-title">Высота (px)</div>
+                <div class="builder-row">
+                    <input id="heightRange" type="range" min="228" max="600" value="0">
+                    <input id="heightValue" type="number" min="228" max="600" value="">
+                    <label><input type="checkbox" id="heightAuto" checked> авто</label>
+                </div>
+            </div>
+
+            <div>
+                <div class="builder-group-title">Ширина текста (%) — только горизонтальный</div>
+                <div class="builder-row">
+                    <input id="textWidthRange" type="range" min="40" max="80" value="60">
+                    <span id="textWidthLabel">60%</span>
+                </div>
+            </div>
+
+            <div>
+                <div class="builder-group-title">Заголовок</div>
+                <input id="titleInput" class="builder-text-input"
+                       value="Пройди опрос и получи полгода пользования бесплатно">
+            </div>
+
+            <div>
+                <div class="builder-group-title">Подзаголовок</div>
+                <textarea id="subtitleInput" class="builder-text-input" rows="3">Делись с другими мамами опросом, если они укажут твою почту при заполнении, то подарим на аккаунт еще 1 месяц плюсом за каждого человека.</textarea>
+            </div>
+
+            <div>
+                <div class="builder-group-title">Текст на кнопке</div>
+                <input id="ctaInput" class="builder-text-input" value="Пройти опрос">
+            </div>
+
+            <div>
+                <div class="builder-group-title">Кот: высота (px)</div>
+                <div class="builder-row">
+                    <input id="imgHeightRange" type="range" min="160" max="530" value="380">
+                    <input id="imgHeightValue" type="number" min="160" max="530" value="380">
+                </div>
+            </div>
+
+            <div>
+                <div class="builder-group-title">Кот: отступы (top/right, px)</div>
+                <div class="builder-row">
+                    <span>top</span>
+                    <input id="imgTopRange" type="range" min="-200" max="400" value="24">
+                    <input id="imgTopValue" type="number" value="24">
+                    <label><input type="checkbox" id="imgTopAuto" checked> авто</label>
+                </div>
+                <div class="builder-row">
+                    <span>right</span>
+                    <input id="imgRightRange" type="range" min="-200" max="200" value="36">
+                    <input id="imgRightValue" type="number" value="36">
+                    <label><input type="checkbox" id="imgRightAuto" checked> авто</label>
+                </div>
+            </div>
+
+            <div>
+                <div class="builder-group-title">Скругление углов</div>
+                <div class="builder-radio-row" id="radiusGroup">
+                    <label><input type="radio" name="radius" value="0"> 0</label>
+                    <label><input type="radio" name="radius" value="8"> 8</label>
+                    <label><input type="radio" name="radius" value="16" checked> 16</label>
+                    <label><input type="radio" name="radius" value="24"> 24</label>
+                    <label><input type="radio" name="radius" value="32"> 32</label>
+                </div>
+            </div>
+
+            <div class="builder-buttons">
+                <button class="builder-download-btn" id="downloadPng">Скачать баннер (PNG)</button>
+            </div>
+        </div>
+
+        <div class="builder-preview-wrapper">
+            <div class="builder-banner-frame" id="bannerFrame">
+                <section class="download-banner builder-download-banner builder-banner-horizontal" id="bannerSection">
+                    <div class="download-banner-inner">
+                        <div class="download-banner-content" id="bannerContent">
+                            <div class="download-banner-clouds">
+                                <img src="img/hero-decor/cloud-m.png" alt="" class="download-banner-cloud download-banner-cloud-m" crossorigin="anonymous">
+                                <img src="img/hero-decor/cloud-s.png" alt="" class="download-banner-cloud download-banner-cloud-s" crossorigin="anonymous">
+                            </div>
+                            <div class="download-banner-text" id="bannerText">
+                                <h2 class="download-banner-title" id="titleOutput">Пройди опрос и получи полгода пользования бесплатно</h2>
+                                <p class="download-banner-subtitle" id="subtitleOutput">
+                                    Делись с другими мамами опросом, если они укажут твою почту при заполнении, то подарим на аккаунт еще 1 месяц плюсом за каждого человека.
+                                </p>
+                                <div class="download-banner-buttons">
+                                    <a href="#" class="cta-button" id="ctaOutput">Пройти опрос</a>
+                                </div>
+                            </div>
+                            <img src="img/hero-quiz.png" alt="" class="download-banner-quiz-image" id="quizImage" crossorigin="anonymous">
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bannerSection = document.getElementById('bannerSection');
+            const bannerContent = document.getElementById('bannerContent');
+            const bannerText = document.getElementById('bannerText');
+            const titleOutput = document.getElementById('titleOutput');
+            const subtitleOutput = document.getElementById('subtitleOutput');
+            const ctaOutput = document.getElementById('ctaOutput');
+            const quizImage = document.getElementById('quizImage');
+
+            const layoutRadios = document.querySelectorAll('input[name="layout"]');
+            const widthRange = document.getElementById('widthRange');
+            const widthValue = document.getElementById('widthValue');
+            const widthAuto = document.getElementById('widthAuto');
+
+            const heightRange = document.getElementById('heightRange');
+            const heightValue = document.getElementById('heightValue');
+            const heightAuto = document.getElementById('heightAuto');
+
+            const textWidthRange = document.getElementById('textWidthRange');
+            const textWidthLabel = document.getElementById('textWidthLabel');
+
+            const titleInput = document.getElementById('titleInput');
+            const subtitleInput = document.getElementById('subtitleInput');
+            const ctaInput = document.getElementById('ctaInput');
+
+            const imgHeightRange = document.getElementById('imgHeightRange');
+            const imgHeightValue = document.getElementById('imgHeightValue');
+            const imgTopRange = document.getElementById('imgTopRange');
+            const imgTopValue = document.getElementById('imgTopValue');
+            const imgRightRange = document.getElementById('imgRightRange');
+            const imgRightValue = document.getElementById('imgRightValue');
+            const imgTopAuto = document.getElementById('imgTopAuto');
+            const imgRightAuto = document.getElementById('imgRightAuto');
+
+            const radiusGroup = document.getElementById('radiusGroup');
+            const downloadBtn = document.getElementById('downloadPng');
+
+            function currentLayout() {
+                return document.querySelector('input[name="layout"]:checked').value;
+            }
+
+            function updateLayout() {
+                const layout = currentLayout();
+                bannerSection.classList.toggle('builder-banner-horizontal', layout === 'horizontal');
+                bannerSection.classList.toggle('builder-banner-vertical', layout === 'vertical');
+
+                if (layout === 'horizontal') {
+                    widthAuto.checked = true;
+                    applyWidth();
+                    bannerText.style.maxWidth = textWidthRange.value + '%';
+                } else {
+                    widthAuto.checked = true;
+                    applyWidth();
+                    bannerText.style.maxWidth = '100%';
+                }
+                recalcTextHeight();
+                applyImageAutoOffsets();
+            }
+
+            function applyWidth() {
+                const layout = currentLayout();
+                if (widthAuto.checked) {
+                    if (layout === 'horizontal') {
+                        bannerContent.style.width = '1152px';
+                        widthRange.value = 1152;
+                        widthValue.value = 1152;
+                    } else {
+                        bannerContent.style.width = '320px';
+                        widthRange.value = 320;
+                        widthValue.value = 320;
+                    }
+                } else {
+                    const v = parseInt(widthRange.value, 10);
+                    bannerContent.style.width = v + 'px';
+                    widthValue.value = v;
+                }
+            }
+
+            function applyHeight() {
+                if (heightAuto.checked) {
+                    bannerContent.style.height = '';
+                    heightRange.value = 0;
+                    heightValue.value = '';
+                } else {
+                    const v = parseInt(heightRange.value, 10);
+                    bannerContent.style.height = v + 'px';
+                    heightValue.value = v;
+                }
+            }
+
+            function recalcTextHeight() {
+                const h = bannerText.offsetHeight;
+                bannerContent.style.setProperty('--text-height', h + 'px');
+            }
+
+            function applyTextWidth() {
+                const layout = currentLayout();
+                const v = parseInt(textWidthRange.value, 10);
+                textWidthLabel.textContent = v + '%';
+                if (layout === 'horizontal') {
+                    bannerText.style.maxWidth = v + '%';
+                }
+            }
+
+            function applyImageHeight() {
+                const v = parseInt(imgHeightRange.value, 10);
+                imgHeightValue.value = v;
+                quizImage.style.height = v + 'px';
+            }
+
+            function applyImageOffsets() {
+                quizImage.style.top = imgTopValue.value + 'px';
+                quizImage.style.right = imgRightValue.value + 'px';
+            }
+
+            function applyImageAutoOffsets() {
+                const layout = currentLayout();
+                if (imgTopAuto.checked) {
+                    if (layout === 'vertical') {
+                        const h = bannerText.offsetHeight;
+                        const top = h + 24;
+                        imgTopValue.value = top;
+                        imgTopRange.value = top;
+                    } else {
+                        imgTopValue.value = 24;
+                        imgTopRange.value = 24;
+                    }
+                }
+                if (imgRightAuto.checked) {
+                    if (layout === 'vertical') {
+                        imgRightValue.value = -36;
+                        imgRightRange.value = -36;
+                    } else {
+                        imgRightValue.value = 36;
+                        imgRightRange.value = 36;
+                    }
+                }
+                applyImageOffsets();
+            }
+
+            function applyRadius(value) {
+                bannerContent.style.setProperty('--banner-radius', value + 'px');
+            }
+
+            layoutRadios.forEach(r => r.addEventListener('change', () => {
+                updateLayout();
+            }));
+
+            widthRange.addEventListener('input', () => {
+                widthAuto.checked = false;
+                applyWidth();
+            });
+            widthValue.addEventListener('input', () => {
+                widthAuto.checked = false;
+                widthRange.value = widthValue.value || 320;
+                applyWidth();
+            });
+            widthAuto.addEventListener('change', applyWidth);
+
+            heightRange.addEventListener('input', () => {
+                heightAuto.checked = false;
+                applyHeight();
+            });
+            heightValue.addEventListener('input', () => {
+                heightAuto.checked = false;
+                heightRange.value = heightValue.value || 228;
+                applyHeight();
+            });
+            heightAuto.addEventListener('change', applyHeight);
+
+            textWidthRange.addEventListener('input', () => {
+                applyTextWidth();
+            });
+
+            titleInput.addEventListener('input', () => {
+                titleOutput.textContent = titleInput.value;
+                recalcTextHeight();
+                applyImageAutoOffsets();
+            });
+            subtitleInput.addEventListener('input', () => {
+                subtitleOutput.textContent = subtitleInput.value;
+                recalcTextHeight();
+                applyImageAutoOffsets();
+            });
+            ctaInput.addEventListener('input', () => {
+                ctaOutput.textContent = ctaInput.value;
+                recalcTextHeight();
+                applyImageAutoOffsets();
+            });
+
+            imgHeightRange.addEventListener('input', () => {
+                applyImageHeight();
+            });
+            imgHeightValue.addEventListener('input', () => {
+                imgHeightRange.value = imgHeightValue.value || 160;
+                applyImageHeight();
+            });
+
+            imgTopRange.addEventListener('input', () => {
+                imgTopAuto.checked = false;
+                imgTopValue.value = imgTopRange.value;
+                applyImageOffsets();
+            });
+            imgTopValue.addEventListener('input', () => {
+                imgTopAuto.checked = false;
+                imgTopRange.value = imgTopValue.value || 0;
+                applyImageOffsets();
+            });
+            imgRightRange.addEventListener('input', () => {
+                imgRightAuto.checked = false;
+                imgRightValue.value = imgRightRange.value;
+                applyImageOffsets();
+            });
+            imgRightValue.addEventListener('input', () => {
+                imgRightAuto.checked = false;
+                imgRightRange.value = imgRightValue.value || 0;
+                applyImageOffsets();
+            });
+            imgTopAuto.addEventListener('change', applyImageAutoOffsets);
+            imgRightAuto.addEventListener('change', applyImageAutoOffsets);
+
+            radiusGroup.addEventListener('change', (e) => {
+                if (e.target.name === 'radius') {
+                    applyRadius(e.target.value);
+                }
+            });
+
+            downloadBtn.addEventListener('click', async () => {
+                const node = bannerContent;
+                try {
+                    const canvas = await html2canvas(node, {
+                        backgroundColor: null,
+                        scale: 2,
+                        useCORS: true
+                    });
+                    const link = document.createElement('a');
+                    link.download = 'baysic-banner.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                } catch (e) {
+                    console.error('Ошибка рендера баннера в PNG', e);
+                    alert('Не удалось отрендерить баннер в PNG. Попробуй открыть страницу через локальный сервер (http://localhost), а не file://');
+                }
+            });
+
+            // init
+            recalcTextHeight();
+            applyWidth();
+            applyHeight();
+            applyTextWidth();
+            applyImageHeight();
+            applyImageAutoOffsets();
+            applyRadius(16);
+        });
+    </script>
+</body>
+</html>
+

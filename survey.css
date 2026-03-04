@@ -229,6 +229,44 @@
     box-shadow: 0 14px 36px rgba(15, 23, 42, 0.3);
 }
 
+/* Картинка hero-quiz внутри баннера на отдельной странице */
+.download-banner-quiz-image {
+    width: auto;
+    display: block;
+}
+
+.banner-page .download-banner-content {
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-page .download-banner-text {
+    max-width: 60%;
+}
+
+.banner-page .download-banner-title {
+    font-family: 'Nunito', sans-serif;
+}
+
+.banner-page .download-banner-icon-wrapper--quiz {
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+.banner-page .download-banner-quiz-image {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    height: 380px;
+    width: auto;
+}
+
+.banner-page .cta-button {
+    text-decoration: none;
+}
+
 @media (max-width: 768px) {
     .survey-hero {
         padding: 60px 16px 0;
